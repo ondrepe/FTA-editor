@@ -1,11 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.FtaEditor;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.diagram.DiagramTreePanel;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.pallet.PalletPanel;
-import java.awt.BorderLayout;
-import java.awt.HeadlessException;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorPanel;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet.PalletPanel;
+import java.awt.*;
 import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,25 +31,77 @@ public class MainWindow extends JFrame {
     
     private JMenu view;
     private JMenuItem showPalletWindow;
-    private JMenuItem showDiagramTreeWindow;
+    private JCheckBoxMenuItem showDiagramTreeValidity;
     
     private JMenu help;
     private JMenuItem about;
     
     private PalletPanel palletPanel;
+    private DiagramTreePanel diagramTreePanel;
+    private EditorPanel editorPanel;
     
-    public MainWindow() throws HeadlessException {
+    private FtaEditor editor;
+    
+    public MainWindow(FtaEditor editor) throws HeadlessException {
         super(MAIN_WINDOW_TITLE);
+        this.editor = editor;
+        this.setSize(1000, 400);
+        createPanelInstances();
         initComponents();
         initListeners();
-        this.setSize(1000, 400);
+        
+        diagramTreePanel.setData(editor.getController().getData());
+        
         setVisible(true);
     }
     
-    protected final void initComponents() {
-        mainPanel = new JPanel(new BorderLayout());
+    protected final void createPanelInstances() {
+        mainPanel = new JPanel();
+        
         palletPanel = new PalletPanel();
+        editorPanel = new EditorPanel();
+        diagramTreePanel = new DiagramTreePanel();
+    }
+    
+    protected final void initComponents() {
         initMenu();
+        this.setJMenuBar(menuBar);
+        
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 2;
+        c.gridwidth = 5;
+        
+        mainPanel.setBackground(Color.blue);
+        
+        mainPanel.setLayout(layout);
+        mainPanel.add(diagramTreePanel, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 2;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridheight = 2;
+        c.gridwidth = 1;
+        mainPanel.add(palletPanel, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 2;
+        c.weighty = 2;
+        c.gridx = 1;
+        c.gridy = 1;
+        c.gridheight = 2;
+        c.gridwidth = 2;
+        mainPanel.add(editorPanel, c);
+
         this.getContentPane().add(mainPanel);
     }
     
@@ -57,11 +111,6 @@ public class MainWindow extends JFrame {
         initFileMenu();
         initViewMenu();
         initHelpMenu();
-        
-        mainPanel.add(BorderLayout.NORTH, menuBar);
-        //mainPanel.add(BorderLayout.CENTER, new PalletItem(new BasicEvent()));
-        mainPanel.add(BorderLayout.CENTER, new DiagramTreePanel());
-        //mainPanel.add(BorderLayout.WEST, palletPanel);
     }
     
     private void initFileMenu() {
@@ -74,9 +123,9 @@ public class MainWindow extends JFrame {
     private void initViewMenu() {
         view = new JMenu("View");
         showPalletWindow = new JMenuItem("Show Pallet");
-        showDiagramTreeWindow = new JMenuItem("Show Diagram Tree");
+        showDiagramTreeValidity = new JCheckBoxMenuItem("Show validation in Diagram Tree");
         view.add(showPalletWindow);
-        view.add(showDiagramTreeWindow);
+        view.add(showDiagramTreeValidity);
         menuBar.add(view);
     }
     
@@ -89,7 +138,7 @@ public class MainWindow extends JFrame {
 
     private void initListeners() {
         this.addWindowListener(new WindowClosingListener());
-        
         exit.addActionListener(new ExitListener());
+        showDiagramTreeValidity.addActionListener(new ShowDiagramTreeTableValidityListener(diagramTreePanel));
     }
 }

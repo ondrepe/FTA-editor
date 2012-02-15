@@ -1,21 +1,25 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.diagram.model;
+package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.api.IDiagramTreeTableModel;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
-import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**
  *
  * @author ondrepe
  */
-public class DiagramTreeTableModel implements TreeTableModel {
+public class DiagramTreeTableModel implements IDiagramTreeTableModel {
 
-    private AbstractGate root;
+    private AbstractSymbol data;
 
-    public void setRoot(AbstractGate root) {
-        this.root = root;
+    public AbstractSymbol getData() {
+        return data;
+    }
+
+    public void setData(AbstractSymbol data) {
+        this.data = data;
     }
 
     public Class<?> getColumnClass(int i) {
@@ -67,20 +71,20 @@ public class DiagramTreeTableModel implements TreeTableModel {
     public void setValueAt(Object o, Object o1, int i) {
         AbstractSymbol symbol = (AbstractSymbol) o1;
         if (i == 1) {
-            String data = (String) o;
-            symbol.setLabel(data);
+            String value = (String) o;
+            symbol.setLabel(value);
         } else if (i == 2) {
-            String data = (String) o;
-            symbol.setText(data);
+            String value = (String) o;
+            symbol.setText(value);
         } else if (i == 3) {
-            Float data = (Float) o;
-            symbol.setFailureProbability(data);
+            Float value = (Float) o;
+            symbol.setFailureProbability(value);
         }
         
     }
 
     public Object getRoot() {
-        return root;
+        return data;
     }
 
     public Object getChild(Object parent, int index) {
@@ -107,10 +111,12 @@ public class DiagramTreeTableModel implements TreeTableModel {
     }
 
     public void addTreeModelListener(TreeModelListener l) {
+        System.out.println("add");
 //        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void removeTreeModelListener(TreeModelListener l) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("remove");
+        //        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

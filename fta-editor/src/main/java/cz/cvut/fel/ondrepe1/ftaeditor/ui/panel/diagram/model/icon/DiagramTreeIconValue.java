@@ -1,4 +1,4 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.diagram.model.icon;
+package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import java.util.HashMap;

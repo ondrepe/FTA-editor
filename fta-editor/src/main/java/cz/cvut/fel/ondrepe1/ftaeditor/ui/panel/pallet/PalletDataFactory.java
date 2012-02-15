@@ -1,4 +1,4 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.pallet;
+package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.symbol.SymbolGroup;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.symbol.event.BasicEvent;
