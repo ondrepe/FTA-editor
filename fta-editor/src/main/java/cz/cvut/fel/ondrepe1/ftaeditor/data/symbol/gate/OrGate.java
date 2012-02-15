@@ -15,4 +15,9 @@ public class OrGate extends AbstractGate {
     public String getType() {
         return "OR";
     }
+    
+    @Override
+    protected int getMaxCountChildren() {
+        return Integer.MAX_VALUE;
+    }
 }

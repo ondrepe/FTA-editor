@@ -12,18 +12,14 @@ public class NotGate extends AbstractGate {
     protected int getMinCountChildren() {
         return 1;
     }
-
-    @Override
-    public void addChild(AbstractSymbol symbol) {
-        if (getChildren().size() == 1) {
-            //TODO: throw exception
-            return;
-        }
-        super.addChild(symbol);
-    }
     
     @Override
     public String getType() {
         return "NOT";
+    }
+    
+    @Override
+    protected int getMaxCountChildren() {
+        return 1;
     }
 }

@@ -15,4 +15,9 @@ public class AndGate extends AbstractGate {
     public String getType() {
         return "AND";
     }
+
+    @Override
+    protected int getMaxCountChildren() {
+        return Integer.MAX_VALUE;
+    }
 }

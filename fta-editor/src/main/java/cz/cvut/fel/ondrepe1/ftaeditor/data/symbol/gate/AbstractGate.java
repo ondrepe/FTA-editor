@@ -18,8 +18,15 @@ public abstract class AbstractGate extends AbstractSymbol {
     }
     
     public void addChild(AbstractSymbol symbol) {
-        symbol.setParent(this);
-        getChildren().add(symbol);
+        if (canAddChild()) {
+            symbol.setParent(this);
+            getChildren().add(symbol);
+        }
+    }
+    
+    public boolean canAddChild() {
+        if (getChildren().size() >= getMaxCountChildren()) return false;
+        return true;
     }
 
     @Override
@@ -32,4 +39,5 @@ public abstract class AbstractGate extends AbstractSymbol {
     }
     
     protected abstract int getMinCountChildren();
+    protected abstract int getMaxCountChildren();
 }

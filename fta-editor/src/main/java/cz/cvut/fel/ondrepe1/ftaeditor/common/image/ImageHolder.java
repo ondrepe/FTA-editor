@@ -30,14 +30,10 @@ public class ImageHolder {
     private static Icon tickIcon = loadFromResource("tick.png");
     private static Icon crossIcon = loadFromResource("cross.png");
     
-    private static Icon gateAndIcon = loadFromSvgResource("symbols/gate/and.svg");
-    private static Icon gateInhibitIcon = loadFromSvgResource("symbols/gate/inhibit.svg");
-    private static Icon gateMajorityVoteIcon = loadFromSvgResource("symbols/gate/majorityVote.svg");
-    private static Icon gateNotIcon = loadFromSvgResource("symbols/gate/not.svg");
-    private static Icon gateOrIcon = loadFromSvgResource("symbols/gate/or.svg");
-    private static Icon gatePandIcon = loadFromSvgResource("symbols/gate/pand.svg");
-    private static Icon gateTransferIcon = loadFromSvgResource("symbols/gate/transfer.svg");
-    private static Icon gateXorIcon = loadFromSvgResource("symbols/gate/xor.svg");
+    private static Icon btnAddIcon = loadFromResource("addBtn.png");
+    private static Icon btnAddDisabledIcon = loadFromResource("addBtn-dsb.png");
+    private static Icon btnRemoveIcon = loadFromResource("removeBtn.png");
+    private static Icon btnRemoveDisabledIcon = loadFromResource("removeBtn-dsb.png");
 
     
     public static Icon getTickIcon() {
@@ -48,36 +44,20 @@ public class ImageHolder {
         return crossIcon;
     }
 
-    public static Icon getGateAndIcon() {
-        return gateAndIcon;
+    public static Icon getBtnAddIcon() {
+        return btnAddIcon;
     }
 
-    public static Icon getGateInhibitIcon() {
-        return gateInhibitIcon;
+    public static Icon getBtnAddDisabledIcon() {
+        return btnAddDisabledIcon;
     }
 
-    public static Icon getGateMajorityVoteIcon() {
-        return gateMajorityVoteIcon;
+    public static Icon getBtnRemoveIcon() {
+        return btnRemoveIcon;
     }
 
-    public static Icon getGateNotIcon() {
-        return gateNotIcon;
-    }
-
-    public static Icon getGateOrIcon() {
-        return gateOrIcon;
-    }
-
-    public static Icon getGatePandIcon() {
-        return gatePandIcon;
-    }
-
-    public static Icon getGateTransferIcon() {
-        return gateTransferIcon;
-    }
-
-    public static Icon getGateXorIcon() {
-        return gateXorIcon;
+    public static Icon getBtnRemoveDisabledIcon() {
+        return btnRemoveDisabledIcon;
     }
     
     public static Icon loadFromResource(String name) {

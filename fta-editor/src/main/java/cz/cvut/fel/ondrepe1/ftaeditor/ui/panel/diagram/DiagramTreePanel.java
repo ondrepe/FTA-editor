@@ -1,16 +1,20 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.ISymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.event.SymbolSelectEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.AbstractEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.DiagramTreeSelectionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.api.IDiagramTreeTableModel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconStringValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeStringValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl.DiagramTreeTableModel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl.DiagramTreeTableValidityModel;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.TreeCellRenderer;
 import org.jdesktop.swingx.JXTreeTable;
@@ -21,11 +25,9 @@ import org.jdesktop.swingx.renderer.IconValue;
  *
  * @author ondrepe
  */
-public class DiagramTreePanel extends JPanel {
+public class DiagramTreePanel extends JPanel implements ISymbolSelectListener {
 
     private AbstractSymbol data;
-    
-    private JPanel mainPanel = new JPanel();
     
     private JButton addSymbolButton;
     private JButton removeSymbolButton;
@@ -38,6 +40,7 @@ public class DiagramTreePanel extends JPanel {
 
     public DiagramTreePanel() {
         initComponents();
+        FtaController.getInstance().registerEventListener(SymbolSelectEvent.class, this);
     }
 
     public AbstractSymbol getData() {
@@ -56,33 +59,29 @@ public class DiagramTreePanel extends JPanel {
     }
     
     private void initComponents() {
-        mainPanel = new JPanel();
-        mainPanel.setBackground(Color.red);
-        setBackground(Color.green);
+        initLayout();
+        initButtons();
         initTable();
-//        this.add(mainPanel);
+        
+        addComponents();
+    }
+    
+    protected void initLayout() {
         GridBagLayout mainLayout = new GridBagLayout();
-//        mainPanel.setLayout(mainLayout);
         this.setLayout(mainLayout);
-        
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1;
-        c.weighty = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridheight = 1;
-        c.gridwidth = 7;
-        
-        this.add(scrollPane, c);
-        
-//        this.setLayout(mainLayout);
-//        mainLayout.putConstraint(SpringLayout.WEST, scrollPane, 5, SpringLayout.WEST, mainPanel);
     }
     
     protected void initButtons() {
-        addSymbolButton = new JButton("Add");
-        removeSymbolButton = new JButton("Remove");
+        addSymbolButton = new JButton();
+        addSymbolButton.setIcon(ImageHolder.getBtnAddIcon());
+        addSymbolButton.setDisabledIcon(ImageHolder.getBtnAddDisabledIcon());
+        addSymbolButton.setEnabled(false);
+        
+        removeSymbolButton = new JButton();
+        removeSymbolButton.setIcon(ImageHolder.getBtnRemoveIcon());
+        removeSymbolButton.setDisabledIcon(ImageHolder.getBtnRemoveDisabledIcon());
+        removeSymbolButton.setEnabled(false);
+        
         changeTypeButton = new JButton("Change");
     }
     
@@ -103,8 +102,32 @@ public class DiagramTreePanel extends JPanel {
         scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);
         scrollPane.setPreferredSize(new Dimension(800, 200));
-//        mainPanel.add(scrollPane);
-        //this.add(scrollPane);
+
+        table.addTreeSelectionListener(new DiagramTreeSelectionListener());
+    }
+    
+    protected void addComponents() {
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1; c.weighty = 1;
+        c.gridx = 0; c.gridy = 1;
+        c.gridheight = 1; c.gridwidth = 7;
+        c.insets = new Insets(0, 5, 5, 5);
+        this.add(scrollPane, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 0; c.gridy = 0;
+        c.gridheight = 1; c.gridwidth = 1;
+        c.insets = new Insets(5, 5, 5, 0);
+        this.add(addSymbolButton, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 1; c.gridy = 0;
+        c.gridheight = 1; c.gridwidth = 1;
+        c.insets = new Insets(5, 5, 5, 0);
+        this.add(removeSymbolButton, c);
     }
     
     protected IDiagramTreeTableModel getModel() {
@@ -130,5 +153,40 @@ public class DiagramTreePanel extends JPanel {
         model.setData(data);
         table.setTreeTableModel(model);
         table.expandAll();
+    }
+
+    public void onSelect(AbstractSymbol symbol) {
+        if(symbol instanceof AbstractEvent) {
+            disableAddButton();
+            enableRemoveButton();
+        } else {
+            AbstractGate gate = (AbstractGate) symbol;
+            if (gate.canAddChild()) {
+                enableAddButton();
+            } else {
+                disableAddButton();
+            }
+            if (gate.getChildren().isEmpty()) {
+                enableRemoveButton();
+            } else {
+                disableRemoveButton();
+            }
+        }
+    }
+    
+    protected void disableAddButton() {
+        addSymbolButton.setEnabled(false);
+    }
+    
+    protected void enableAddButton() {
+        addSymbolButton.setEnabled(true);
+    }
+
+    protected void disableRemoveButton() {
+        removeSymbolButton.setEnabled(false);
+    }
+    
+    protected void enableRemoveButton() {
+        removeSymbolButton.setEnabled(true);
     }
 }

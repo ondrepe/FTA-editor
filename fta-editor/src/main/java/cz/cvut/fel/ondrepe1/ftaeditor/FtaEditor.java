@@ -1,5 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.MainWindow;
 
 /**

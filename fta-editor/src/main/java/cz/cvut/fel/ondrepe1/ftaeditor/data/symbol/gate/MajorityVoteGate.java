@@ -15,4 +15,9 @@ public class MajorityVoteGate extends AbstractGate {
     public String getType() {
         return "Majority Vote";
     }
+    
+    @Override
+    protected int getMaxCountChildren() {
+        return Integer.MAX_VALUE;
+    }
 }

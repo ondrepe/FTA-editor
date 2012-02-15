@@ -12,19 +12,14 @@ public class InhibitGate extends AbstractGate {
     protected int getMinCountChildren() {
         return 2;
     }
-
-    @Override
-    public void addChild(AbstractSymbol symbol) {
-        if (getChildren().size() == 2) {
-            //TODO: throw error
-            return;
-        }
-        super.addChild(symbol);
-    }
     
     @Override
     public String getType() {
         return "Inhibit";
     }
 
+    @Override
+    protected int getMaxCountChildren() {
+        return 2;
+    }
 }

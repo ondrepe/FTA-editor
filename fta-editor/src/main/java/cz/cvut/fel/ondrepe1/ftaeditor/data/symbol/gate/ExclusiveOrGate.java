@@ -16,4 +16,8 @@ public class ExclusiveOrGate extends AbstractGate {
         return "XOR";
     }
 
+    @Override
+    protected int getMaxCountChildren() {
+        return Integer.MAX_VALUE;
+    }
 }

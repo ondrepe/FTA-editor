@@ -15,4 +15,9 @@ public class PriorityAndGate extends AbstractGate {
     public String getType() {
         return "PAND";
     }
+    
+    @Override
+    protected int getMaxCountChildren() {
+        return Integer.MAX_VALUE;
+    }
 }

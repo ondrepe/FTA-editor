@@ -74,8 +74,8 @@ public class MainWindow extends JFrame {
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridheight = 2;
-        c.gridwidth = 5;
+        c.gridheight = 10;
+        c.gridwidth = 10;
         
         mainPanel.setBackground(Color.blue);
         
@@ -84,22 +84,22 @@ public class MainWindow extends JFrame {
         
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1;
-        c.weighty = 2;
+        c.weightx = 2;
+        c.weighty = 8;
         c.gridx = 0;
-        c.gridy = 1;
-        c.gridheight = 2;
-        c.gridwidth = 1;
+        c.gridy = 10;
+        c.gridheight = 40;
+        c.gridwidth = 2;
         mainPanel.add(palletPanel, c);
         
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-        c.weightx = 2;
-        c.weighty = 2;
-        c.gridx = 1;
-        c.gridy = 1;
-        c.gridheight = 2;
-        c.gridwidth = 2;
+        c.weightx = 8;
+        c.weighty = 8;
+        c.gridx = 2;
+        c.gridy = 10;
+        c.gridheight = 40;
+        c.gridwidth = 8;
         mainPanel.add(editorPanel, c);
 
         this.getContentPane().add(mainPanel);
