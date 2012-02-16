@@ -6,9 +6,9 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
  *
  * @author ondrepe
  */
-public class SymbolSelectEvent extends CommonSymbolEvent {
+public class PalletSymbolSelectEvent extends CommonSymbolEvent {
 
-    public SymbolSelectEvent(AbstractSymbol symbol) {
+    public PalletSymbolSelectEvent(AbstractSymbol symbol) {
         super(symbol);
     }
 }

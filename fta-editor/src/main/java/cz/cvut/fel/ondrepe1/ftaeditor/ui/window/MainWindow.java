@@ -1,6 +1,5 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.FtaEditor;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IOpenAddSymbolWindowListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
@@ -11,7 +10,9 @@ import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidity
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorPanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet.PalletPanel;
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +52,6 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
         initComponents();
         initListeners();
         
-//        diagramTreePanel.setData(editor.getController().getData());
-        
         setVisible(true);
         registerListeners();
     }
@@ -70,40 +69,21 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
         this.setJMenuBar(menuBar);
         
         GridBagLayout layout = new GridBagLayout();
+        mainPanel.setLayout(layout);
+        
+        JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, palletPanel, editorPanel);
+        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diagramTreePanel, horizontalSplitPane);
+        
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridheight = 10;
-        c.gridwidth = 10;
+        c.gridheight = 1;
+        c.gridwidth = 1;
+        mainPanel.add(verticalSplitPane, c);
         
-        mainPanel.setBackground(Color.blue);
-        
-        mainPanel.setLayout(layout);
-        mainPanel.add(diagramTreePanel, c);
-        
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 2;
-        c.weighty = 8;
-        c.gridx = 0;
-        c.gridy = 10;
-        c.gridheight = 40;
-        c.gridwidth = 2;
-        mainPanel.add(palletPanel, c);
-        
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 8;
-        c.weighty = 8;
-        c.gridx = 2;
-        c.gridy = 10;
-        c.gridheight = 40;
-        c.gridwidth = 8;
-        mainPanel.add(editorPanel, c);
-
         this.getContentPane().add(mainPanel);
     }
     

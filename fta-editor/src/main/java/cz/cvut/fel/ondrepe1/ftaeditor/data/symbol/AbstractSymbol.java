@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author ondrepe
  */
-public abstract class AbstractSymbol implements IValidable {
+public abstract class AbstractSymbol implements IValidable, Cloneable {
 
     private AbstractGate parent;
     private String text;
@@ -77,4 +77,11 @@ public abstract class AbstractSymbol implements IValidable {
     }
     
     public abstract String getType();
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    
+    
 }

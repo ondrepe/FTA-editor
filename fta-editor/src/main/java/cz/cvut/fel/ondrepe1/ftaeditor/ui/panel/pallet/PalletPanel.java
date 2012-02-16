@@ -1,5 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.pallet.PalletSelectionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconStringValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeStringValue;
@@ -38,17 +39,21 @@ public class PalletPanel extends JPanel {
         IconValue iv = new PalletIconValue(new DiagramTreeIconStringValue());
         ListCellRenderer renderer = new DefaultListRenderer(new DiagramTreeStringValue(), iv);
         
+        PalletSelectionListener selectionListener = new PalletSelectionListener();
+        
         eventsList = new JXList();
         PalletListModel model = new PalletListModel(PalletPanelDataFactory.getInstance().getEvents());
         eventsList.setModel(model);
         eventsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         eventsList.setCellRenderer(renderer);
+        eventsList.addListSelectionListener(selectionListener);
         
         gatesList = new JXList();
         model = new PalletListModel(PalletPanelDataFactory.getInstance().getGates());
         gatesList.setModel(model);
         gatesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         gatesList.setCellRenderer(renderer);
+        gatesList.addListSelectionListener(selectionListener);
     }
     
     private void initComponents() {

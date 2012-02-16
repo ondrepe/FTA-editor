@@ -4,8 +4,8 @@ import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.SymbolSelectEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.ISymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.DiagramTreeSymbolSelectEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IDiagramTreeSymbolSelectListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.AbstractEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
@@ -35,7 +35,7 @@ import org.jdesktop.swingx.renderer.IconValue;
  *
  * @author ondrepe
  */
-public class DiagramTreePanel extends JPanel implements ISymbolSelectListener, IDataChangedListener {
+public class DiagramTreePanel extends JPanel implements IDiagramTreeSymbolSelectListener, IDataChangedListener {
 
     private AbstractSymbol data;
     private JButton addSymbolButton;
@@ -180,7 +180,7 @@ public class DiagramTreePanel extends JPanel implements ISymbolSelectListener, I
         table.expandAll();
     }
 
-    public void onSelect(AbstractSymbol symbol) {
+    public void onDiagramTreeSelect(AbstractSymbol symbol) {
         if (symbol == null) {
             disableAddButton();
             disableRemoveButton();
@@ -223,7 +223,7 @@ public class DiagramTreePanel extends JPanel implements ISymbolSelectListener, I
     }
 
     protected final void registerListeners() {
-        FtaController.getInstance().registerEventListener(SymbolSelectEvent.class, this);
+        FtaController.getInstance().registerEventListener(DiagramTreeSymbolSelectEvent.class, this);
         FtaController.getInstance().registerEventListener(DataChangedEvent.class, this);
     }
 }

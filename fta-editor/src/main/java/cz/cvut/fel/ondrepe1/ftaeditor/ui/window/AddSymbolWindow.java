@@ -10,7 +10,6 @@ import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.model.TypeComboBoxModel;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,6 +88,10 @@ public class AddSymbolWindow extends JFrame {
                 boolean result = true;
                 
                 AbstractSymbol symbol = (AbstractSymbol) cmbType.getSelectedItem();
+                try {
+                    symbol = (AbstractSymbol) symbol.clone();
+                } catch (CloneNotSupportedException ex) {
+                }
                 symbol.setLabel(txfLabel.getText());
                 symbol.setText(txfText.getText());
                 try {
