@@ -6,10 +6,13 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IOpenAddSymbolWindowListene
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.AddSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.RemoveSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.SymbolSelectEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IAddSymbolListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IRemoveSymbolListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.ISymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
 
 /**
  *
@@ -22,6 +25,8 @@ public class EventHandler {
             ((ISymbolSelectListener) listener).onSelect(((SymbolSelectEvent) event).getSymbol());
         } else if (event instanceof RemoveSymbolEvent && listener instanceof IRemoveSymbolListener) {
             ((IRemoveSymbolListener) listener).onRemoveSymbol(((RemoveSymbolEvent) event).getSymbol());
+        } else if (event instanceof AddSymbolEvent && listener instanceof IAddSymbolListener) {
+            ((IAddSymbolListener) listener).onAddSymbol(((AddSymbolEvent) event).getSymbol(), (AbstractGate)((AddSymbolEvent) event).getParent());
         }
         
         

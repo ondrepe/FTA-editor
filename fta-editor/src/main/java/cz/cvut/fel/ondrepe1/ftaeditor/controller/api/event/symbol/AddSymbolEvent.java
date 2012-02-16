@@ -8,7 +8,14 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
  */
 public class AddSymbolEvent extends CommonSymbolEvent {
 
-    public AddSymbolEvent(AbstractSymbol symbol) {
+    private AbstractSymbol parent;
+    
+    public AddSymbolEvent(AbstractSymbol symbol, AbstractSymbol parent) {
         super(symbol);
+        this.parent = parent;
+    }
+
+    public AbstractSymbol getParent() {
+        return parent;
     }
 }

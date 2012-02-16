@@ -1,13 +1,19 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.AddSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconStringValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeStringValue;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.model.TypeComboBoxModel;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import org.jdesktop.swingx.JXComboBox;
 import org.jdesktop.swingx.renderer.DefaultListRenderer;
@@ -32,6 +38,8 @@ public class AddSymbolWindow extends JFrame {
     private JTextField txfText;
     private JLabel lblFailureProbability;
     private JTextField txfFailureProbability;
+    private JButton addButton;
+    private JLabel lblError;
     
     public AddSymbolWindow(AbstractSymbol parent) throws HeadlessException {
         super("Add Symbol");
@@ -55,6 +63,7 @@ public class AddSymbolWindow extends JFrame {
         IconValue iv = new DiagramTreeIconValue(new DiagramTreeIconStringValue());
         ListCellRenderer renderer = new DefaultListRenderer(new DiagramTreeStringValue(), iv);
         cmbType.setRenderer(renderer);
+        cmbType.setSelectedIndex(0);
         cmbType.setPreferredSize(new Dimension(220, 20));
         
         lblLabel = new JLabel("Label: ");
@@ -69,6 +78,36 @@ public class AddSymbolWindow extends JFrame {
         txfFailureProbability = new JTextField();
         txfFailureProbability.setPreferredSize(new Dimension(220, 20));
         
+        lblError = new JLabel();
+        lblError.setForeground(Color.red);
+        
+        addButton = new JButton("Add");
+        addButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                lblError.setText("");
+                boolean result = true;
+                
+                AbstractSymbol symbol = (AbstractSymbol) cmbType.getSelectedItem();
+                symbol.setLabel(txfLabel.getText());
+                symbol.setText(txfText.getText());
+                try {
+                    String fPText = txfFailureProbability.getText();
+                    if (fPText != null && !fPText.isEmpty()) {
+                        Float failureProbability = Float.valueOf(fPText);
+                        symbol.setFailureProbability(failureProbability);
+                    }
+                } catch (NumberFormatException ex) {
+                    lblError.setText("not a number error");
+                    result = false;
+                }
+                if (result) {
+                    FtaController.getInstance().fireEvent(new AddSymbolEvent(symbol, parent));
+                    AddSymbolWindow.this.dispose();
+                }
+            }
+        });
+        
         mainPanel.add(lblType);
         mainPanel.add(cmbType);
         mainPanel.add(lblLabel);
@@ -77,6 +116,8 @@ public class AddSymbolWindow extends JFrame {
         mainPanel.add(txfText);
         mainPanel.add(lblFailureProbability);
         mainPanel.add(txfFailureProbability);
+        mainPanel.add(addButton);
+        mainPanel.add(lblError);
         
         layout.putConstraint(SpringLayout.EAST, cmbType, -10, SpringLayout.EAST, mainPanel);
         layout.putConstraint(SpringLayout.EAST, lblType, -10, SpringLayout.WEST, cmbType);
@@ -99,6 +140,12 @@ public class AddSymbolWindow extends JFrame {
         layout.putConstraint(SpringLayout.WEST, txfFailureProbability, 0, SpringLayout.WEST, txfText);
         layout.putConstraint(SpringLayout.NORTH, txfFailureProbability, 5, SpringLayout.SOUTH, txfText);
         layout.putConstraint(SpringLayout.VERTICAL_CENTER, lblFailureProbability, 0, SpringLayout.VERTICAL_CENTER, txfFailureProbability);
+        
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, addButton, 0, SpringLayout.HORIZONTAL_CENTER, mainPanel);
+        layout.putConstraint(SpringLayout.SOUTH, addButton, -10, SpringLayout.SOUTH, mainPanel);
+        
+        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblError, 0, SpringLayout.HORIZONTAL_CENTER, mainPanel);
+        layout.putConstraint(SpringLayout.SOUTH, lblError, -10, SpringLayout.NORTH, addButton);
         
         this.getContentPane().add(mainPanel);
     }
