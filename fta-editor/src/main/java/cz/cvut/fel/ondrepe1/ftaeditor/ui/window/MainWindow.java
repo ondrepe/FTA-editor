@@ -1,6 +1,10 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.FtaEditor;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IOpenAddSymbolWindowListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;
@@ -16,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author ondrepe
  */
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
 
     public static final Logger logger = LoggerFactory.getLogger(MainWindow.class);
     
@@ -40,19 +44,17 @@ public class MainWindow extends JFrame {
     private DiagramTreePanel diagramTreePanel;
     private EditorPanel editorPanel;
     
-    private FtaEditor editor;
-    
-    public MainWindow(FtaEditor editor) throws HeadlessException {
+    public MainWindow() throws HeadlessException {
         super(MAIN_WINDOW_TITLE);
-        this.editor = editor;
         this.setSize(1000, 400);
         createPanelInstances();
         initComponents();
         initListeners();
         
-        diagramTreePanel.setData(editor.getController().getData());
+//        diagramTreePanel.setData(editor.getController().getData());
         
         setVisible(true);
+        registerListeners();
     }
     
     protected final void createPanelInstances() {
@@ -140,5 +142,14 @@ public class MainWindow extends JFrame {
         this.addWindowListener(new WindowClosingListener());
         exit.addActionListener(new ExitListener());
         showDiagramTreeValidity.addActionListener(new ShowDiagramTreeTableValidityListener(diagramTreePanel));
+    }
+    
+    private void registerListeners() {
+        FtaController.getInstance().registerEventListener(OpenAddSymbolWindowEvent.class, this);
+    }
+
+    public void onOpenAddSymbolWindow(AbstractSymbol parent) {
+        AddSymbolWindow addWindow = new AddSymbolWindow(parent);
+        addWindow.setVisible(true);
     }
 }

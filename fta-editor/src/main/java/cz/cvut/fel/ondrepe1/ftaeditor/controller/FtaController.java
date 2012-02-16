@@ -1,7 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IEventListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

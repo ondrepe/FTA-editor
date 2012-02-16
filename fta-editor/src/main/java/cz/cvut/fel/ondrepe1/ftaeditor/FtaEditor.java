@@ -8,20 +8,14 @@ import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.MainWindow;
  * @author ondrepe
  */
 public class FtaEditor {
-
-    private FtaDataController controller;
     
     public static void main(String[] args) {
         FtaEditor editor = new FtaEditor();
     }
 
     public FtaEditor() {
-        controller = new FtaDataController();
-        MainWindow mw = new MainWindow(this);
+        MainWindow mw = new MainWindow();
+        FtaDataController.getInstance().loadData();
         
-    }
-
-    public FtaDataController getController() {
-        return controller;
     }
 }
