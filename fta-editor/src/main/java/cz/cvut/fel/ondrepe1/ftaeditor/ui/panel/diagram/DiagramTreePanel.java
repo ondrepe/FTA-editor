@@ -22,7 +22,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.tree.TreeCellRenderer;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.renderer.DefaultTreeRenderer;
@@ -38,7 +41,6 @@ public class DiagramTreePanel extends JPanel implements ISymbolSelectListener, I
     private JButton addSymbolButton;
     private JButton removeSymbolButton;
     private JButton changeTypeButton;
-    private JLabel infoLabel;
     private JScrollPane scrollPane;
     private JXTreeTable table;
 

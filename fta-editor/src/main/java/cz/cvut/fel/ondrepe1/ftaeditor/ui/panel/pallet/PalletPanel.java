@@ -1,30 +1,77 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.symbol.CommonSymbol;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.symbol.SymbolGroup;
-import java.awt.Color;
-import java.util.List;
-import javax.swing.JPanel;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconStringValue;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeIconValue;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon.DiagramTreeStringValue;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet.model.PalletListModel;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet.model.icon.PalletIconValue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.*;
+import org.jdesktop.swingx.JXList;
+import org.jdesktop.swingx.renderer.DefaultListRenderer;
+import org.jdesktop.swingx.renderer.IconValue;
 
 /**
  *
  * @author ondrepe
  */
 public class PalletPanel extends JPanel {
-
-    private List<SymbolGroup> groups;
-    private List<PalletItem> items;
+    
+    private JTabbedPane tabbedPane;
+    private JXList eventsList;
+    private JXList gatesList;
     
     public PalletPanel() {
-        setBackground(Color.red);
-//        groups = PalletDataFactory.getPalletGroups();
-//        for (SymbolGroup group : groups) {
-//            for (CommonSymbol symbol : group.getList()) {
-//                PalletItem item = new PalletItem(symbol);
-//                items.add(item);
-//                this.add(item);
-//            }
-//        }
+        initLayout();
+        initLists();
+        initComponents();
+    }
+    
+    private void initLayout() {
+        GridBagLayout mainLayout = new GridBagLayout();
+        this.setLayout(mainLayout);
+    }
+    
+    private void initLists() {
+        IconValue iv = new PalletIconValue(new DiagramTreeIconStringValue());
+        ListCellRenderer renderer = new DefaultListRenderer(new DiagramTreeStringValue(), iv);
+        
+        eventsList = new JXList();
+        PalletListModel model = new PalletListModel(PalletPanelDataFactory.getInstance().getEvents());
+        eventsList.setModel(model);
+        eventsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        eventsList.setCellRenderer(renderer);
+        
+        gatesList = new JXList();
+        model = new PalletListModel(PalletPanelDataFactory.getInstance().getGates());
+        gatesList.setModel(model);
+        gatesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        gatesList.setCellRenderer(renderer);
+    }
+    
+    private void initComponents() {
+    
+        tabbedPane = new JTabbedPane();
+        JScrollPane eventsPane = new JScrollPane();
+        eventsPane.setViewportView(eventsList);
+        tabbedPane.addTab("Events", eventsPane);
+        
+        JScrollPane gatesPane = new JScrollPane();
+        gatesPane.setViewportView(gatesList);
+        tabbedPane.addTab("Gates", gatesPane);
+        
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 1;
+        c.gridwidth = 1;
+        c.insets = new Insets(0, 5, 5, 5);
+        this.add(tabbedPane, c);
     }
 
     

@@ -46,7 +46,7 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
     
     public MainWindow() throws HeadlessException {
         super(MAIN_WINDOW_TITLE);
-        this.setSize(1000, 400);
+        this.setSize(1000, 1000);
         createPanelInstances();
         initComponents();
         initListeners();

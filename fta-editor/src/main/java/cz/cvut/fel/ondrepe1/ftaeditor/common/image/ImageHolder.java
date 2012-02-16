@@ -77,6 +77,10 @@ public class ImageHolder {
     }
     
     public static Icon loadFromSvgResource(String name) {
+        return loadFromSvgResource(name, true);
+    }
+    
+    public static Icon loadFromSvgResource(String name, boolean thumbnail) {
         URL url = ImageHolder.class.getResource("/img/symbols/" + name);
         if (url == null) {
             return null;
@@ -108,7 +112,8 @@ public class ImageHolder {
             rootSvgNode.paint(g2d);
 
             g2d.dispose();
-            if (bufferedImage.getHeight() > 30) {
+           
+            if (thumbnail && bufferedImage.getHeight() > 30) {
                 bufferedImage = GraphicsUtilities.createThumbnail(bufferedImage, 16);
             }
             Icon icon = new ImageIcon(bufferedImage);
