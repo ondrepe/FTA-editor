@@ -1,16 +1,10 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.editor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.EditorDataChangedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.PalletSymbolSelectEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IPalletSymbolSelectListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgBasicEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgConditionalEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgCircle;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgBasicEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgConditionalEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
-import java.awt.Point;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +20,7 @@ import org.w3c.dom.Node;
  *
  * @author ondrepe
  */
-public class EditorSvgController implements IPalletSymbolSelectListener {
+public class EditorSvgController {
 
     private static EditorSvgController instance;
 
@@ -63,8 +57,10 @@ public class EditorSvgController implements IPalletSymbolSelectListener {
         Node conditionalNode = document.importNode(conditional.getElement(), true);
         svgRoot.appendChild(conditionalNode);
         
+        SvgAndGate andGate = new SvgAndGate(50, 50);
+        Node andNode = document.importNode(andGate.getElement(), true);
+        svgRoot.appendChild(andNode);
         
-
         String parser = XMLResourceDescriptor.getXMLParserClassName();
         SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
         String uri = EditorSvgController.class.getResource("/img/symbols/gate/and.svg").toString();
@@ -92,7 +88,7 @@ public class EditorSvgController implements IPalletSymbolSelectListener {
     }
 
     private void registerListeners() {
-        FtaController.getInstance().registerEventListener(PalletSymbolSelectEvent.class, this);
+        
     }
 
     public Document getDocument() {

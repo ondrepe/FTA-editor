@@ -2,13 +2,14 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IDataChangedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.DiagramTreeSymbolSelectEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IDiagramTreeSymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.symbol.IDiagramTreeSymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.AbstractEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.AddButtonActionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.DiagramTreeSelectionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.RemoveButtonActionListener;
@@ -37,7 +38,7 @@ import org.jdesktop.swingx.renderer.IconValue;
  */
 public class DiagramTreePanel extends JPanel implements IDiagramTreeSymbolSelectListener, IDataChangedListener {
 
-    private AbstractSymbol data;
+    private FtaData data;
     private JButton addSymbolButton;
     private JButton removeSymbolButton;
     private JButton changeTypeButton;
@@ -49,11 +50,11 @@ public class DiagramTreePanel extends JPanel implements IDiagramTreeSymbolSelect
         registerListeners();
     }
 
-    public AbstractSymbol getData() {
+    public FtaData getData() {
         return data;
     }
 
-    public void setData(AbstractSymbol data) {
+    public void setData(FtaData data) {
         this.data = data;
         IDiagramTreeTableModel model = getModel();
         if (model instanceof DiagramTreeTableModel) {
@@ -180,32 +181,6 @@ public class DiagramTreePanel extends JPanel implements IDiagramTreeSymbolSelect
         table.expandAll();
     }
 
-    public void onDiagramTreeSelect(AbstractSymbol symbol) {
-        if (symbol == null) {
-            disableAddButton();
-            disableRemoveButton();
-        } else if (symbol instanceof AbstractEvent) {
-            disableAddButton();
-            enableRemoveButton();
-        } else {
-            AbstractGate gate = (AbstractGate) symbol;
-            if (gate.canAddChild()) {
-                enableAddButton();
-            } else {
-                disableAddButton();
-            }
-            if (gate.getChildren().isEmpty()) {
-                enableRemoveButton();
-            } else {
-                disableRemoveButton();
-            }
-        }
-    }
-    
-    public void onDataChanged(AbstractSymbol data) {
-        setData(data);
-    }
-
     protected void disableAddButton() {
         addSymbolButton.setEnabled(false);
     }
@@ -225,5 +200,13 @@ public class DiagramTreePanel extends JPanel implements IDiagramTreeSymbolSelect
     protected final void registerListeners() {
         FtaController.getInstance().registerEventListener(DiagramTreeSymbolSelectEvent.class, this);
         FtaController.getInstance().registerEventListener(DataChangedEvent.class, this);
+    }
+
+    public void onEvent(DiagramTreeSymbolSelectEvent event) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void onEvent(DataChangedEvent event) {
+        setData(event.getData());
     }
 }

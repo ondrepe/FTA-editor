@@ -7,7 +7,7 @@ package cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate;
 public class AndGate extends AbstractGate {
 
     @Override
-    protected int getMinCountChildren() {
+    public int getMinCountChildren() {
         return 2;
     }
     
@@ -17,7 +17,7 @@ public class AndGate extends AbstractGate {
     }
 
     @Override
-    protected int getMaxCountChildren() {
-        return Integer.MAX_VALUE;
+    public int getMaxCountChildren() {
+        return APLICATION_MAX_CHILDREN;
     }
 }

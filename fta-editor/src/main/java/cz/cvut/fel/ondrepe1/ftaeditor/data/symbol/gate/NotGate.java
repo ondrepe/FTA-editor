@@ -1,7 +1,5 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
-
 /**
  *
  * @author ondrepe
@@ -9,7 +7,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 public class NotGate extends AbstractGate {
 
     @Override
-    protected int getMinCountChildren() {
+    public int getMinCountChildren() {
         return 1;
     }
     
@@ -19,7 +17,7 @@ public class NotGate extends AbstractGate {
     }
     
     @Override
-    protected int getMaxCountChildren() {
+    public int getMaxCountChildren() {
         return 1;
     }
 }

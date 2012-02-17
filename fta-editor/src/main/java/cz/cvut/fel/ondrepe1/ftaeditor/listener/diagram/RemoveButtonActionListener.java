@@ -1,9 +1,9 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.RemoveSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.DiagramTreeSymbolSelectEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.symbol.IDiagramTreeSymbolSelectListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.RemoveSymbolEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.symbol.IDiagramTreeSymbolSelectListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,15 +17,19 @@ public class RemoveButtonActionListener implements ActionListener, IDiagramTreeS
     private AbstractSymbol symbol;
 
     public RemoveButtonActionListener() {
-        FtaController.getInstance().registerEventListener(DiagramTreeSymbolSelectEvent.class, this);
+        registerListeners();
     }
     
     public void actionPerformed(ActionEvent e) {
         FtaController.getInstance().fireEvent(new RemoveSymbolEvent(symbol));
     }
 
-    public void onDiagramTreeSelect(AbstractSymbol symbol) {
-        this.symbol = symbol;
+    public void onEvent(DiagramTreeSymbolSelectEvent event) {
+        this.symbol = event.getSymbol();
+    }
+
+    private void registerListeners() {
+        FtaController.getInstance().registerEventListener(DiagramTreeSymbolSelectEvent.class, this);
     }
 
 }

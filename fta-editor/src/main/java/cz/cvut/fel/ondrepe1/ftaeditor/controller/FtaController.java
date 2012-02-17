@@ -1,11 +1,14 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IEventListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEventListener;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +35,12 @@ public class FtaController {
         List<IEventListener> list = listeners.get(event.getClass());
         if (list != null) {
             for (IEventListener listener : list) {
-                EventHandler.handleEvent(event, listener);
+                try {
+                    Method method = listener.getClass().getMethod("onEvent", event.getClass());
+                    method.invoke(listener, event);
+                } catch (Exception ex) {
+                    Logger.getLogger(FtaController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

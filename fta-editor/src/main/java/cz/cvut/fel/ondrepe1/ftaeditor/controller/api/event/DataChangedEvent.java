@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 
 /**
  *
@@ -8,13 +8,13 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
  */
 public class DataChangedEvent extends CommonEvent {
 
-    private AbstractSymbol data;
+    private FtaData data;
 
-    public DataChangedEvent(AbstractSymbol data) {
+    public DataChangedEvent(FtaData data) {
         this.data = data;
     }
 
-    public AbstractSymbol getData() {
+    public FtaData getData() {
         return data;
     }
 }

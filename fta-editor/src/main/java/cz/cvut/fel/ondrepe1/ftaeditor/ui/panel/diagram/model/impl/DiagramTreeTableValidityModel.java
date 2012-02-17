@@ -1,7 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.IDataItem;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -32,10 +32,10 @@ public class DiagramTreeTableValidityModel extends DiagramTreeTableModel {
     
     @Override
     public Object getValueAt(Object o, int i) {
-        AbstractSymbol symbol = (AbstractSymbol) o;
+        IDataItem symbol = (IDataItem) o;
         if (i == 4) {
             Icon icon;
-            if (symbol.validate()) { 
+            if (symbol.isValid()) { 
                 icon = ImageHolder.getTickIcon();
             } else {
                 icon = ImageHolder.getCrossIcon();

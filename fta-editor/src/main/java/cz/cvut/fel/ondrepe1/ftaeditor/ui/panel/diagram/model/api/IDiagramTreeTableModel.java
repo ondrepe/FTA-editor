@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.api;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import org.jdesktop.swingx.treetable.TreeTableModel;
 
 /**
@@ -13,6 +9,6 @@ import org.jdesktop.swingx.treetable.TreeTableModel;
  */
 public interface IDiagramTreeTableModel extends TreeTableModel {
     
-    public AbstractSymbol getData();
-    public void setData(AbstractSymbol data);
+    public FtaData getData();
+    public void setData(FtaData data);
 }

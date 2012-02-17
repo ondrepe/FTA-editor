@@ -23,12 +23,6 @@
         </dependency>
     
         <dependency>
-            <groupId>xalan</groupId>
-            <artifactId>xalan</artifactId>
-            <version>2.7.1</version>
-        </dependency>
-    
-        <dependency>
             <groupId>org.swinglabs</groupId>
             <artifactId>swingx-core</artifactId>
             <version>1.6.2-2</version>
@@ -43,12 +37,6 @@
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-swing</artifactId>
             <version>1.7</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>xalan</artifactId>
-                    <groupId>xalan</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.axsl.org.w3c.dom.svg</groupId>

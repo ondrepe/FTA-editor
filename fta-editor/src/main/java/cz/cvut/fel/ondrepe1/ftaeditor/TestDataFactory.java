@@ -1,8 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.BasicEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.ConditionalEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.*;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.DataCreator;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 
 /**
  *
@@ -10,35 +10,15 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.*;
  */
 public class TestDataFactory {
 
-    public static AbstractGate generateFTATree() {
-        OrGate top = new OrGate();
+    public static FtaData generateFTATree() {
+        FtaData data = new FtaData();
         
-        InhibitGate inhibitGate = new InhibitGate();
-        ConditionalEvent cEvent = new ConditionalEvent();
-        BasicEvent bEvent = new BasicEvent();
-        inhibitGate.addChild(cEvent);
-        inhibitGate.addChild(bEvent);
-        top.addChild(inhibitGate);
+        FtaDataItem and = DataCreator.createAndGate(50, 50);
+        and.addChild(DataCreator.createConditionalEvent(0, 200));
+        and.addChild(DataCreator.createBasicEvent(100, 200));
         
-        ExclusiveOrGate xor = new ExclusiveOrGate();
-        bEvent = new BasicEvent();
-        xor.addChild(bEvent);
-        bEvent = new BasicEvent();
-        xor.addChild(bEvent);
-        top.addChild(xor);
+        data.getStartItem().setChild(and);
         
-        AndGate and = new AndGate();
-        bEvent = new BasicEvent();
-        and.addChild(bEvent);
-        bEvent = new BasicEvent();
-        and.addChild(bEvent);
-        bEvent = new BasicEvent();
-        and.addChild(bEvent);
-        top.addChild(and);
-        
-        NotGate t = new NotGate();
-        t.addChild(top);
-        
-        return t;
+        return data;
     }
 }

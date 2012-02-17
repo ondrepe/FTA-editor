@@ -1,7 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.IDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.api.IDiagramTreeTableModel;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
@@ -12,13 +13,13 @@ import javax.swing.tree.TreePath;
  */
 public class DiagramTreeTableModel implements IDiagramTreeTableModel {
 
-    private AbstractSymbol data;
+    private FtaData data;
 
-    public AbstractSymbol getData() {
+    public FtaData getData() {
         return data;
     }
 
-    public void setData(AbstractSymbol data) {
+    public void setData(FtaData data) {
         this.data = data;
     }
 
@@ -51,10 +52,8 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
     }
 
     public Object getValueAt(Object o, int i) {
-        AbstractSymbol symbol = (AbstractSymbol) o;
-        if (i == 0) {
-            return symbol.getType();
-        } else if (i == 1) {
+        IDataItem symbol = (IDataItem) o;
+        if (i == 1) {
             return symbol.getLabel();
         } else if (i == 2) {
             return symbol.getText();
@@ -69,7 +68,7 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
     }
 
     public void setValueAt(Object o, Object o1, int i) {
-        AbstractSymbol symbol = (AbstractSymbol) o1;
+        IDataItem symbol = (IDataItem) o1;
         if (i == 1) {
             String value = (String) o;
             symbol.setLabel(value);
@@ -84,22 +83,20 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
     }
 
     public Object getRoot() {
-        return data;
+        if (data == null) return null;
+        return data.getStartItem();
     }
 
     public Object getChild(Object parent, int index) {
-        return ((AbstractGate) parent).getChildren().get(index);
+        return ((IDataItem) parent).getChildAt(index);
     }
 
     public int getChildCount(Object parent) {
-        return ((AbstractGate) parent).getChildren().size();
+        return ((IDataItem) parent).getChildrenCount();
     }
 
     public boolean isLeaf(Object node) {
-        if (node instanceof AbstractGate) {
-            return ((AbstractGate) node).getChildren().isEmpty();
-        }
-        return true;
+        return ((IDataItem) node).isLeaf();
     }
 
     public void valueForPathChanged(TreePath path, Object newValue) {
@@ -107,16 +104,12 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
     }
 
     public int getIndexOfChild(Object parent, Object child) {
-        return ((AbstractGate) parent).getChildren().indexOf(child);
+        return ((IDataItem) parent).getIndexOfChild((FtaDataItem) child);
     }
 
     public void addTreeModelListener(TreeModelListener l) {
-        System.out.println("add");
-//        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void removeTreeModelListener(TreeModelListener l) {
-        System.out.println("remove");
-        //        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

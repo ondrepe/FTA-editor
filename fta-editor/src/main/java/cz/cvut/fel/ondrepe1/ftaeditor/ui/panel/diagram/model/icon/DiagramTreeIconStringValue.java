@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.icon;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.BasicEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.ConditionalEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.DormantEvent;
@@ -16,36 +16,37 @@ import org.jdesktop.swingx.renderer.StringValues;
 public class DiagramTreeIconStringValue implements StringValue {
 
     public String getString(Object value) {
-        if (value instanceof AbstractSymbol) {
-            String key = null;
-            if (value instanceof AbstractGate) {
+        if (value instanceof FtaDataItem) {
+            Class clazz = ((FtaDataItem) value).getSymbolClass();
+            String key;
+            if (clazz.getSuperclass().equals(AbstractGate.class)) {
                 key = "gate/";
-                if (value instanceof AndGate) {
+                if (clazz.equals(AndGate.class)) {
                     key += "and";
-                } else if (value instanceof InhibitGate) {
+                } else if (clazz.equals(InhibitGate.class)) {
                     key += "inhibit";
-                } else if (value instanceof MajorityVoteGate) {
+                } else if (clazz.equals(MajorityVoteGate.class)) {
                     key += "majorityVote";
-                } else if (value instanceof NotGate) {
+                } else if (clazz.equals(NotGate.class)) {
                     key += "not";
-                } else if (value instanceof OrGate) {
+                } else if (clazz.equals(OrGate.class)) {
                     key += "or";
-                } else if (value instanceof PriorityAndGate) {
+                } else if (clazz.equals(PriorityAndGate.class)) {
                     key += "pand";
-//                } else if (value instanceof TransferGate) {
+//                } else if (clazz.equals(TransferGate.class)) {
 //                    key += "transfer";
-                } else if (value instanceof ExclusiveOrGate) {
+                } else if (clazz.equals(ExclusiveOrGate.class)) {
                     key += "xor";
                 }
             } else {
                 key = "event/";
-                if (value instanceof BasicEvent) {
+                if (clazz.equals(BasicEvent.class)) {
                     key += "basic";
-                } else if (value instanceof ConditionalEvent) {
+                } else if (clazz.equals(ConditionalEvent.class)) {
                     key += "conditional";
-                } else if (value instanceof DormantEvent) {
+                } else if (clazz.equals(DormantEvent.class)) {
                     key += "dormant";
-                } else if (value instanceof UndevelopedEvent) {
+                } else if (clazz.equals(UndevelopedEvent.class)) {
                     key += "undeveloped";
                 }
             }

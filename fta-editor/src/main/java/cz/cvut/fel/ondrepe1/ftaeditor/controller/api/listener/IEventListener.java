@@ -1,4 +1,4 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.controller.api;
+package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener;
 
 /**
  *

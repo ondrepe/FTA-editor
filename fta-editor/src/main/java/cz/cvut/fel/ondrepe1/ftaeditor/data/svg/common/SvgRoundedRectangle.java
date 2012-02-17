@@ -7,25 +7,26 @@ import org.w3c.dom.Element;
  *
  * @author ondrepe
  */
-public class SvgCommonFillRectangle extends SvgObject {
-    
+public class SvgRoundedRectangle extends SvgObject {
+
     private Element rectangle;
     
     
-    public SvgCommonFillRectangle(double x, double y, double width, double height) {
+    public SvgRoundedRectangle(double x, double y) {
 
         rectangle = getDocument().createElementNS(SVG_NS, SVG_TYPE_RECTANGLE);
         rectangle.setAttributeNS(null, ATT_X, String.valueOf(x));
         rectangle.setAttributeNS(null, ATT_Y, String.valueOf(y));
-        rectangle.setAttributeNS(null, ATT_WIDTH, String.valueOf(width));
-        rectangle.setAttributeNS(null, ATT_HEIGHT, String.valueOf(height));
+        rectangle.setAttributeNS(null, ATT_WIDTH, String.valueOf(SvgRectangle.WIDTH - DEFUAL_STEP_VALUE));
+        rectangle.setAttributeNS(null, ATT_HEIGHT, String.valueOf(SvgRectangle.HEIGHT));
+        rectangle.setAttributeNS(null, ATT_RADIUS_X, String.valueOf(SvgCircle.RADIUS));
         rectangle.setAttributeNS(null, ATT_FILL, COLOR_WHITE);
+        rectangle.setAttributeNS(null, ATT_STROKE_WIDTH, String.valueOf(LINE_WIDTH));
+        rectangle.setAttributeNS(null, ATT_STROKE, COLOR_BLACK);
     }
 
     @Override
     public Element getElement() {
         return rectangle;
     }
-    
-    
 }

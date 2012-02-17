@@ -1,7 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IOpenAddSymbolWindowListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenAddSymbolWindowListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
@@ -9,7 +10,6 @@ import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorPanel;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.pallet.PalletPanel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -41,7 +41,6 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
     private JMenu help;
     private JMenuItem about;
     
-    private PalletPanel palletPanel;
     private DiagramTreePanel diagramTreePanel;
     private EditorPanel editorPanel;
     
@@ -59,7 +58,6 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
     protected final void createPanelInstances() {
         mainPanel = new JPanel();
         
-        palletPanel = new PalletPanel();
         editorPanel = new EditorPanel();
         diagramTreePanel = new DiagramTreePanel();
     }
@@ -71,8 +69,7 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
         GridBagLayout layout = new GridBagLayout();
         mainPanel.setLayout(layout);
         
-        JSplitPane horizontalSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, palletPanel, editorPanel);
-        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diagramTreePanel, horizontalSplitPane);
+        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, diagramTreePanel, editorPanel);
         
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -128,8 +125,8 @@ public class MainWindow extends JFrame implements IOpenAddSymbolWindowListener {
         FtaController.getInstance().registerEventListener(OpenAddSymbolWindowEvent.class, this);
     }
 
-    public void onOpenAddSymbolWindow(AbstractSymbol parent) {
-        AddSymbolWindow addWindow = new AddSymbolWindow(parent);
+    public void onEvent(OpenAddSymbolWindowEvent event) {
+        AddSymbolWindow addWindow = new AddSymbolWindow(event.getParent());
         addWindow.setVisible(true);
     }
 }

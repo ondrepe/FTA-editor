@@ -1,5 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common;
 
+import java.awt.Dimension;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
