@@ -1,10 +1,12 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IDataChangedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IEditorDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IEventListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.IOpenAddSymbolWindowListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.EditorDataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.AddSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.RemoveSymbolEvent;
@@ -41,6 +43,8 @@ public class EventHandler {
             ((IDataChangedListener) listener).onDataChanged(((DataChangedEvent) event).getData());
         } else if (event instanceof OpenAddSymbolWindowEvent && listener instanceof IOpenAddSymbolWindowListener) {
             ((IOpenAddSymbolWindowListener) listener).onOpenAddSymbolWindow(((OpenAddSymbolWindowEvent) event).getParent());
+        } else if (event instanceof EditorDataChangedEvent && listener instanceof IEditorDataChangedListener) {
+            ((IEditorDataChangedListener) listener).onEditorDataChange(((EditorDataChangedEvent) event).getDocument());
         }
     }
 }

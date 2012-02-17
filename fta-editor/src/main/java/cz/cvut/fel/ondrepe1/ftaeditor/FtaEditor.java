@@ -1,6 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.editor.EditorSvgController;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.MainWindow;
 
 /**
@@ -16,6 +17,6 @@ public class FtaEditor {
     public FtaEditor() {
         MainWindow mw = new MainWindow();
         FtaDataController.getInstance().loadData();
-        
+        EditorSvgController.getInstance();
     }
 }
