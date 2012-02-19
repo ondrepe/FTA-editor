@@ -39,6 +39,29 @@
             <version>1.7</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-ext</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-gvt</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>xmlgraphics-commons</artifactId>
+            <version>1.4</version>
+        </dependency>
+            
+            
+        
+        <dependency>
             <groupId>org.axsl.org.w3c.dom.svg</groupId>
             <artifactId>svg-dom-java</artifactId>
             <version>1.1</version>
@@ -47,45 +70,45 @@
     </dependencies>
     
     <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>target/lib</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <index>true</index>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <mainClass>cz.cvut.fel.ondrepe1.ftaeditor.FtaEditor</mainClass>
-              <classpathPrefix>lib/</classpathPrefix>
-            </manifest>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>cz.cvut.fel.ondrepe1.ftaeditor.FtaEditor</mainClass>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
 <!--            <manifestEntries>
               <mode>development</mode>
               <url>${project.url}</url>
               <key>value</key>
             </manifestEntries>-->
-          </archive>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>

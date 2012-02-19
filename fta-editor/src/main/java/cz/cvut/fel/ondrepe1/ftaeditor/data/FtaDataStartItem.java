@@ -1,5 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
+
 /**
  *
  * @author ondrepe
@@ -32,6 +35,7 @@ public class FtaDataStartItem implements IDataItem {
         boolean result = false;
         if (canAddChild()) {
             this.child = child;
+            FtaController.getInstance().fireEvent(new DataAddChildEvent(child));
             result = true;
         }
         return result;

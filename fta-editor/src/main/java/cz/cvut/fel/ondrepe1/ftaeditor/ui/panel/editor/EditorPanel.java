@@ -1,5 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.TestDataFactory;
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.editor.EditorSvgController;
@@ -7,12 +8,12 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEditorDataChanged
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.EditorDataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorToolbarButtonChangeEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorToolbarButtonChangeListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.DataCreator;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorToolBarButtonItemListener;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
@@ -20,8 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import org.apache.batik.gvt.GraphicsNode;
-import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.util.gui.resource.JToolbarToggleButton;
+import org.w3c.dom.Document;
 
 /**
  *
@@ -31,7 +32,7 @@ public class EditorPanel extends JPanel implements IEditorDataChangedListener, I
 
     private JTabbedPane tabbedPane;
     
-    private JSVGCanvas canvas;
+    private EditorCanvas canvas;
     
     private JToolBar toolbar;
     private JToolbarToggleButton btnBasicEvent;
@@ -119,7 +120,7 @@ public class EditorPanel extends JPanel implements IEditorDataChangedListener, I
 //        eventsPane.setViewportView(eventsList);
         
         tabbedPane.addTab("New FTA" ,scrollPane);
-        
+        //canvas.getBounds();
         
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -133,47 +134,17 @@ public class EditorPanel extends JPanel implements IEditorDataChangedListener, I
         this.add(tabbedPane, c);
         
         
-        canvas = new JSVGCanvas();
-        canvas.addMouseListener(new MouseListener() {
-
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2) {
-                System.out.println("mouse click");
-                GraphicsNode node = canvas.getGraphicsNode();
-                    System.out.println("dbl click");
-                }
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            public void mousePressed(MouseEvent e) {
-                System.out.println("mouse press");
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            public void mouseReleased(MouseEvent e) {
-                System.out.println("mouse released");
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            public void mouseEntered(MouseEvent e) {
-                System.out.println("mouse entered");
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            public void mouseExited(MouseEvent e) {
-                System.out.println("mouse exited");
-//                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
+        canvas = new EditorCanvas();
+        canvas.setData(TestDataFactory.generateFTATree());
         scrollPane.setViewportView(canvas);
     }
     
     private void loadData() {
-        canvas.setDocument(EditorSvgController.getInstance().test());
+        Document doc = EditorSvgController.getInstance().test();
+//        canvas.setElement(doc.getDocumentElement());
     }
 
     private void registerListeners() {
-        FtaController.getInstance().registerEventListener(EditorDataChangedEvent.class, this);
         FtaController.getInstance().registerEventListener(EditorToolbarButtonChangeEvent.class, this);
     }
 
@@ -220,6 +191,6 @@ public class EditorPanel extends JPanel implements IEditorDataChangedListener, I
     }
 
     public void onEvent(EditorDataChangedEvent event) {
-        canvas.setDocument(event.getDocument());
+//        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

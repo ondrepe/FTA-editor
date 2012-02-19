@@ -25,17 +25,21 @@ public class SvgConditionalEvent extends SvgGroupObject {
     
     public SvgConditionalEvent(int x, int y) {
         super(x, y);
+    }
+
+    @Override
+    protected void init() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
-        SvgRectangle rectangle = new SvgRectangle(x, y);
+        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
         Node rect = getDocument().importNode(rectangle.getElement(), true);
         group.appendChild(rect);
         
-        SvgRoundedRectangle roundedRectangle = new SvgRoundedRectangle(x + (DEFUAL_STEP_VALUE / 2), y + HEIGHT + DEFUAL_STEP_VALUE);
+        SvgRoundedRectangle roundedRectangle = new SvgRoundedRectangle(getPosition().x + (DEFUAL_STEP_VALUE / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         Node roundedRect = getDocument().importNode(roundedRectangle.getElement(), true);
         group.appendChild(roundedRect);
         
-        SvgLine line = new SvgLine(x + (WIDTH / 2), y + HEIGHT, x + (WIDTH / 2), y + HEIGHT + DEFUAL_STEP_VALUE);
+        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
         group.appendChild(ln);
     }

@@ -23,21 +23,25 @@ public class SvgAndGate extends SvgGroupObject {
     
     public SvgAndGate(int x, int y) {
         super(x, y);
+    }
+
+    @Override
+    protected void init() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
-        SvgRectangle rectangle = new SvgRectangle(x, y);
+        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
         Node rect = getDocument().importNode(rectangle.getElement(), true);
         group.appendChild(rect);
         
         Element andGate = getDocument().createElementNS(SVG_NS, SVG_TYPE_PATH);
-        String data = "M " + String.valueOf(x + (WIDTH / 2) - RADIUS) + " " + String.valueOf(y  + HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
+        String data = "M " + String.valueOf(getPosition().x + (WIDTH / 2) - RADIUS) + " " + String.valueOf(getPosition().y  + HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
         andGate.setAttributeNS(null, ATT_DATA, data);
         andGate.setAttributeNS(null, ATT_STROKE_WIDTH, String.valueOf(LINE_WIDTH));
         andGate.setAttributeNS(null, ATT_STROKE, COLOR_BLACK);
         andGate.setAttributeNS(null, ATT_FILL, COLOR_WHITE);
         group.appendChild(andGate);
         
-        SvgLine line = new SvgLine(x + (WIDTH / 2), y + HEIGHT, x + (WIDTH / 2), y + HEIGHT + DEFUAL_STEP_VALUE);
+        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
         group.appendChild(ln);
     }

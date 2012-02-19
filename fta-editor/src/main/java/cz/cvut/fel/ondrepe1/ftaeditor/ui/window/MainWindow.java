@@ -1,10 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenAddSymbolWindowListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenAddSymbolWindowEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenAddSymbolWindowListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;

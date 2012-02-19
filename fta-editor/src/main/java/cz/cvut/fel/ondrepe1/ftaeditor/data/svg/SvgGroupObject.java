@@ -28,8 +28,11 @@ public abstract class SvgGroupObject extends SvgObject {
     private void initGroup() {
         size = initSize();
         symbol = initSymbol();
-        this.outputPoint = new Point(position.x + ((int) (getSize().getWidth() / 2)), position.y);
+        setOutputPoint(position);
+        init();
     }
+    
+    protected abstract void init();
     
     protected abstract Size initSize();
     protected abstract AbstractSymbol initSymbol();
@@ -46,7 +49,21 @@ public abstract class SvgGroupObject extends SvgObject {
         return outputPoint;
     }
 
+    private void setOutputPoint(Point position) {
+        this.outputPoint = new Point(position.x + ((int) (getSize().getWidth() / 2)), position.y);
+    }
+
     public AbstractSymbol getSymbol() {
         return symbol;
+    }
+    
+    public void setPosition(int x, int y) {
+        setPosition(new Point(x, y));
+    }
+    
+    public void setPosition(Point position) {
+        this.position = position;
+        setOutputPoint(position);
+        init();
     }
 }

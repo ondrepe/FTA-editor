@@ -25,17 +25,21 @@ public class SvgBasicEvent extends SvgGroupObject {
     
     public SvgBasicEvent(int x, int y) {
         super(x, y);
+    }
+
+    @Override
+    protected void init() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
-        SvgRectangle rectangle = new SvgRectangle(x, y);
+        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
         Node rect = getDocument().importNode(rectangle.getElement(), true);
         group.appendChild(rect);
         
-        SvgCircle circle = new SvgCircle(x + (WIDTH / 2), y + HEIGHT + RADIUS + DEFUAL_STEP_VALUE);
+        SvgCircle circle = new SvgCircle(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + RADIUS + DEFUAL_STEP_VALUE);
         Node circ = getDocument().importNode(circle.getElement(), true);
         group.appendChild(circ);
         
-        SvgLine line = new SvgLine(x + (WIDTH / 2), y + HEIGHT, x + (WIDTH / 2), y + HEIGHT + DEFUAL_STEP_VALUE);
+        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
         group.appendChild(ln);
     }

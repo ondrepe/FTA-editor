@@ -1,8 +1,11 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -77,6 +80,8 @@ public class FtaDataItem implements IDataItem{
         if (canAddChild()) {
             children.add(child);
             child.setParent(this);
+            // fire event
+            FtaController.getInstance().fireEvent(new DataAddChildEvent(child));
             result = true;
         }
         return result;
@@ -118,4 +123,11 @@ public class FtaDataItem implements IDataItem{
         return false;
     }
     
+    public Point getPosition() {
+        return svgObject.getPosition();
+    }
+    
+    public void setPosition(int x, int y) {
+        svgObject.setPosition(x, y);
+    }
 }
