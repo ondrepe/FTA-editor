@@ -1,7 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import org.apache.batik.util.gui.resource.JToolbarToggleButton;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.toolbar.EditorToolbarToggleButton;
 
 /**
  *
@@ -9,15 +9,15 @@ import org.apache.batik.util.gui.resource.JToolbarToggleButton;
  */
 public class EditorToolbarButtonChangeEvent extends CommonEvent {
 
-    private JToolbarToggleButton button;
+    private EditorToolbarToggleButton button;
     private boolean selected;
 
-    public EditorToolbarButtonChangeEvent(JToolbarToggleButton button, boolean selected) {
+    public EditorToolbarButtonChangeEvent(EditorToolbarToggleButton button, boolean selected) {
         this.button = button;
         this.selected = selected;
     }
 
-    public JToolbarToggleButton getButton() {
+    public EditorToolbarToggleButton getButton() {
         return button;
     }
 

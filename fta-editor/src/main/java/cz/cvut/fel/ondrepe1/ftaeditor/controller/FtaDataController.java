@@ -1,13 +1,17 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.TestDataFactory;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddLonelyItemEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataCreateItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.AddSymbolEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.RemoveSymbolEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataCreateItemListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.symbol.IAddSymbolListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.symbol.IRemoveSymbolListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.DataCreator;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
 
@@ -15,7 +19,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
  *
  * @author ondrejicek
  */
-public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListener {
+public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListener, IDataCreateItemListener {
     
     private static FtaDataController instance;
     
@@ -59,6 +63,7 @@ public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListe
     private void registerListeners() {
         FtaController.getInstance().registerEventListener(AddSymbolEvent.class, this);
         FtaController.getInstance().registerEventListener(RemoveSymbolEvent.class, this);
+        FtaController.getInstance().registerEventListener(DataCreateItemEvent.class, this);
     }
 
     public void onEvent(RemoveSymbolEvent event) {
@@ -67,5 +72,10 @@ public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListe
 
     public void onEvent(AddSymbolEvent event) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void onEvent(DataCreateItemEvent event) {
+        FtaDataItem item = DataCreator.createItem(event.getEditorState(), event.getPosition());
+        FtaController.getInstance().fireEvent(new DataAddLonelyItemEvent(item));
     }
 }

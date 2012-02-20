@@ -1,11 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataItemMovedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddLonelyItemEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataAddChildListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataItemMovedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataAddLonelyItemListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move.IDataItemMovedCompleteListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,16 +22,19 @@ import org.w3c.dom.Node;
  *
  * @author ondrepe
  */
-public class FtaData implements IDataAddChildListener, IDataItemMovedListener {
+public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteListener, IDataAddLonelyItemListener {
 
     private FtaDataStartItem startItem;
     
     private Document document;
     private Element svgRoot;
+    
+    private List<FtaDataItem> lonelyItems;
     private Map<FtaDataItem, Node> nodes;
     
     public FtaData() {
         startItem = new FtaDataStartItem();
+        lonelyItems = new ArrayList<FtaDataItem>();
         nodes = new HashMap<FtaDataItem, Node>();
         
         DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
@@ -52,7 +57,8 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedListener {
 
     private void registerListeners() {
         FtaController.getInstance().registerEventListener(DataAddChildEvent.class, this);
-//        FtaController.getInstance().registerEventListener(DataItemMovedEvent.class, this);
+        FtaController.getInstance().registerEventListener(DataItemMovedCompleteEvent.class, this);
+        FtaController.getInstance().registerEventListener(DataAddLonelyItemEvent.class, this);
     }
 
     public void onEvent(DataAddChildEvent event) {
@@ -75,6 +81,8 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedListener {
             getItemsForParent(list, parentItem);
         }
         
+        list.addAll(lonelyItems);
+        
         return list;
     }
     
@@ -88,13 +96,23 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedListener {
         }
     }
 
-    public void onEvent(DataItemMovedEvent event) {
+    public void onEvent(DataItemMovedCompleteEvent event) {
         FtaDataItem item = event.getDataItem();
         Node node = nodes.get(item);
         svgRoot.removeChild(node);
-        item.setPosition(item.getPosition().x + event.getMouseEvent().getX(), item.getPosition().y + event.getMouseEvent().getY());
+        item.setPosition(event.getPosition());
         node = document.importNode(item.getSvgElement(), true);
+        svgRoot.appendChild(node);
         nodes.put(item, node);
+        FtaController.getInstance().fireEvent(new DataChangedEvent(this));
+    }
+
+    public void onEvent(DataAddLonelyItemEvent event) {
+        FtaDataItem item = event.getDataItem();
+        Node node = document.importNode(item.getSvgElement(), true);
+        svgRoot.appendChild(node);
+        nodes.put(item, node);
+        lonelyItems.add(item);
         FtaController.getInstance().fireEvent(new DataChangedEvent(this));
     }
 }

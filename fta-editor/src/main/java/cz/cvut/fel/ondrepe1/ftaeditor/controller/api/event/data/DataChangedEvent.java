@@ -1,5 +1,6 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event;
+package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 
 /**

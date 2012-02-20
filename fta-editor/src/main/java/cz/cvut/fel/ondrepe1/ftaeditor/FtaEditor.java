@@ -15,6 +15,6 @@ public class FtaEditor {
 
     public FtaEditor() {
         MainWindow mw = new MainWindow();
-        FtaDataController.getInstance().loadData();
+        FtaDataController.getInstance();
     }
 }

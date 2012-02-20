@@ -1,8 +1,6 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
+package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AndGate;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorCanvasItemMouseListener;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,10 +9,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import org.apache.batik.bridge.*;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
-import org.apache.batik.gvt.CanvasGraphicsNode;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.gvt.renderer.ConcreteImageRendererFactory;
 import org.apache.batik.gvt.renderer.ImageRenderer;
@@ -45,19 +41,12 @@ public class EditorCanvasItem extends JComponent {
         svgRoot = document.getDocumentElement();
         svgRoot.setAttributeNS(null, "width", String.valueOf(rectangle.getBounds().width + rectangle.getBounds().x));
         svgRoot.setAttributeNS(null, "height", String.valueOf(rectangle.getBounds().height + rectangle.getBounds().y));
-//        svgRoot.setAttributeNS(null, "x", String.valueOf(rectangle.getBounds().x));
-//        svgRoot.setAttributeNS(null, "y", String.valueOf(rectangle.getBounds().y));
 
         Node node = document.importNode(dataItem.getSvgElement(), true);
-        
-//        Node node = document.importNode(new SvgAndGate(rectangle.getBounds().x , rectangle.getBounds().y).getElement(), true);
-//        Node node = document.importNode(new SvgAndGate(0 , 0).getElement(), true);
         svgRoot.appendChild(node);
-
         initOffscreenImage();
 
         this.setBounds(rectangle.getBounds());
-//        set
         registerListeners();
     }
 
@@ -100,27 +89,12 @@ public class EditorCanvasItem extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-//        if (offscreenImage != null) {
-//            //getting the sub image that should be painted
-//            Rectangle clip = g.getClipBounds();
-//            Rectangle rendRect = new Rectangle(0, 0, offscreenImage.getWidth(), offscreenImage.getHeight());
-//
-//            if (clip.width != 0 && clip.height != 0) {
-//
-//                if (clip.contains(rendRect)) {
-//                    ((Graphics2D) g).drawRenderedImage(offscreenImage, AffineTransform.getTranslateInstance(rendRect.x, rendRect.y));
-//                } else if (clip.intersects(rendRect)) {
-//                    //getting the sub image to draw 
-//                    Rectangle rZone = clip.intersection(rendRect);
-//
-//                    if (rZone.width != 0 && rZone.height != 0) {
-//                        BufferedImage subImage = offscreenImage.getSubimage(rZone.x - rendRect.x, rZone.y - rendRect.y, rZone.width, rZone.height);
-//                        g2d.drawRenderedImage(subImage, AffineTransform.getTranslateInstance(rZone.x, rZone.y));
-//                    }
-//                }
-//            }
-//        }
         g2d.drawRenderedImage(offscreenImage, AffineTransform.getTranslateInstance(0, 0));
         g2d.draw(new Rectangle(0, 0, rectangle.getBounds().width -1, rectangle.getBounds().height -1));
+    }
+
+    @Override
+    public String toString() {
+        return dataItem.getSymbolClass().getSimpleName() + ":  " + super.toString();
     }
 }

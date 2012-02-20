@@ -2,14 +2,11 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IDataChangedListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.symbol.DiagramTreeSymbolSelectEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.symbol.IDiagramTreeSymbolSelectListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.AbstractEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.AddButtonActionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.DiagramTreeSelectionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.diagram.RemoveButtonActionListener;

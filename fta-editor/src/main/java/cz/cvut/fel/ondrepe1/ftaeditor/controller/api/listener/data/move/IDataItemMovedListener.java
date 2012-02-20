@@ -1,6 +1,6 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data;
+package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataItemMovedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEventListener;
 
 /**

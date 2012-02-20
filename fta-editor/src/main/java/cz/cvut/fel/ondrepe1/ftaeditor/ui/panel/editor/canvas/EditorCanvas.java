@@ -1,12 +1,13 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
+package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataItemMovedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IDataChangedListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataItemMovedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move.IDataItemMovedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorCanvasMouseListener;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -80,16 +81,17 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
         repaint();
     }
 
-    public void onEvent(DataChangedEvent event) {
-        setData(event.getData());
-    }
-
     private void registerListeners() {
+        addMouseListener(new EditorCanvasMouseListener(this));
         FtaController.getInstance().registerEventListener(DataChangedEvent.class, this);
         FtaController.getInstance().registerEventListener(DataItemMovedEvent.class, this);
     }
 
     public void onEvent(DataItemMovedEvent event) {
         repaint();
+    }
+    
+    public void onEvent(DataChangedEvent event) {
+        setData(event.getData());
     }
 }

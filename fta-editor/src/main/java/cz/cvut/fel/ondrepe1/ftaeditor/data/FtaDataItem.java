@@ -3,7 +3,6 @@ package cz.cvut.fel.ondrepe1.ftaeditor.data;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -129,5 +128,9 @@ public class FtaDataItem implements IDataItem{
     
     public void setPosition(int x, int y) {
         svgObject.setPosition(x, y);
+    }
+    
+    public void setPosition(Point position) {
+        svgObject.setPosition(position);
     }
 }
