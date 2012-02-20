@@ -13,7 +13,7 @@ public class TestDataFactory {
     public static FtaData generateFTATree() {
         FtaData data = new FtaData();
         
-        FtaDataItem and = DataCreator.createAndGate(50, 50);
+        FtaDataItem and = DataCreator.createAndGate(10, 10);
         and.addChild(DataCreator.createConditionalEvent(0, 200));
         and.addChild(DataCreator.createBasicEvent(100, 200));
         

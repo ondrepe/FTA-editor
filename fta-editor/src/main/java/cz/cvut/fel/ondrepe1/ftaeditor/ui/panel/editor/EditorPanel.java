@@ -3,26 +3,20 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
 import cz.cvut.fel.ondrepe1.ftaeditor.TestDataFactory;
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.editor.EditorSvgController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEditorDataChangedListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.EditorDataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorToolbarButtonChangeEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEditorDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorToolbarButtonChangeListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.DataCreator;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorToolBarButtonItemListener;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.gui.resource.JToolbarToggleButton;
-import org.w3c.dom.Document;
 
 /**
  *
@@ -135,13 +129,11 @@ public class EditorPanel extends JPanel implements IEditorDataChangedListener, I
         
         
         canvas = new EditorCanvas();
-        canvas.setData(TestDataFactory.generateFTATree());
         scrollPane.setViewportView(canvas);
     }
     
     private void loadData() {
-        Document doc = EditorSvgController.getInstance().test();
-//        canvas.setElement(doc.getDocumentElement());
+        FtaController.getInstance().fireEvent(new DataChangedEvent(TestDataFactory.generateFTATree()));
     }
 
     private void registerListeners() {

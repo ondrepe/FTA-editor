@@ -29,21 +29,31 @@ public class SvgAndGate extends SvgGroupObject {
     protected void init() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
-        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
+        Element innerGroup = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
+        
+//        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
+        SvgRectangle rectangle = new SvgRectangle(0, 0);
         Node rect = getDocument().importNode(rectangle.getElement(), true);
-        group.appendChild(rect);
+        innerGroup.appendChild(rect);
         
         Element andGate = getDocument().createElementNS(SVG_NS, SVG_TYPE_PATH);
-        String data = "M " + String.valueOf(getPosition().x + (WIDTH / 2) - RADIUS) + " " + String.valueOf(getPosition().y  + HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
+//        String data = "M " + String.valueOf(getPosition().x + (WIDTH / 2) - RADIUS) + " " + String.valueOf(getPosition().y  + HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
+        String data = "M " + String.valueOf((WIDTH / 2) - RADIUS) + " " + String.valueOf(HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
         andGate.setAttributeNS(null, ATT_DATA, data);
         andGate.setAttributeNS(null, ATT_STROKE_WIDTH, String.valueOf(LINE_WIDTH));
         andGate.setAttributeNS(null, ATT_STROKE, COLOR_BLACK);
         andGate.setAttributeNS(null, ATT_FILL, COLOR_WHITE);
-        group.appendChild(andGate);
+        innerGroup.appendChild(andGate);
         
-        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
+//        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
+        SvgLine line = new SvgLine((WIDTH / 2), HEIGHT, (WIDTH / 2), HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
-        group.appendChild(ln);
+        innerGroup.appendChild(ln);
+        
+        innerGroup.setAttributeNS(null, "transform", "translate(" + String.valueOf(getPosition().x) + "," + String.valueOf(getPosition().y)+")");
+        
+        group.setAttributeNS(null, "fill", "red");
+        group.appendChild(innerGroup);
     }
 
     @Override

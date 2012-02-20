@@ -52,7 +52,7 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedListener {
 
     private void registerListeners() {
         FtaController.getInstance().registerEventListener(DataAddChildEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataItemMovedEvent.class, this);
+//        FtaController.getInstance().registerEventListener(DataItemMovedEvent.class, this);
     }
 
     public void onEvent(DataAddChildEvent event) {
