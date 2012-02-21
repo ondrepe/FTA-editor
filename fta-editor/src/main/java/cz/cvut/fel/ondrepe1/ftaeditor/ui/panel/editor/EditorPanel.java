@@ -3,6 +3,7 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
 import cz.cvut.fel.ondrepe1.ftaeditor.TestDataFactory;
 import cz.cvut.fel.ondrepe1.ftaeditor.common.image.ImageHolder;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorToolbarButtonChangeEvent;
@@ -180,5 +181,6 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
             }
         }
         FtaEditorController.getInstance().setEditorState(editorState);
+        FtaDataController.getInstance().resetParent();
     }
 }

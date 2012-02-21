@@ -1,76 +1,39 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.w3c.dom.Element;
 
 /**
  *
  * @author ondrepe
  */
-public class FtaDataStartItem implements IDataItem {
+@XmlRootElement( name="ftaDataStartItem" )
+@XmlAccessorType( XmlAccessType.NONE )
+public class FtaDataStartItem extends FtaDataItem {
 
-    FtaDataItem child;
-    
-    public FtaDataItem getChildAt(int index) {
-        return child;
-    }
-    
-    public int getIndexOfChild(FtaDataItem child) {
-        return 1;
-    }
-    
-    public int getChildrenCount() {
-        return 1;
-    }
-    
+    @Override
     public boolean canAddChild() {
-        boolean result = false;
-        if (child == null) {
-            result = true;
-        }
-        return result;
-    }
-    
-    public boolean setChild(FtaDataItem child) {
-        boolean result = false;
-        if (canAddChild()) {
-            this.child = child;
-            FtaController.getInstance().fireEvent(new DataAddChildEvent(child));
-            result = true;
-        }
-        return result;
-    }
-    
-    public boolean isLeaf() {
-        boolean result = false;
-        if (child == null) {
-            result = true;
-        }
-        return result;
-    }
-
-    public String getLabel() {
-        return null;
-    }
-
-    public String getText() {
-        return null;
-    }
-
-    public boolean isValid() {
         return true;
     }
-
-    public Float getFailureProbability() {
+    
+    @Override
+    public Element getSvgElement() {
         return null;
     }
-
-    public void setLabel(String label) {
+    
+    @Override
+    public String getSymbolType() {
+        return null;
     }
-
-    public void setText(String text) {
+    
+    @Override
+    public Class getSymbolClass() {
+        return null;
     }
-
-    public void setFailureProbability(Float failureProbability) {
+    
+    public void removeChild(FtaDataItem child){
+        getChildren().remove(child);
     }
 }

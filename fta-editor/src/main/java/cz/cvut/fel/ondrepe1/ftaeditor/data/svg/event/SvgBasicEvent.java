@@ -12,6 +12,8 @@ import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.BasicEvent;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -19,9 +21,13 @@ import org.w3c.dom.Node;
  *
  * @author ondrepe
  */
+@XmlRootElement(name="svgBasicEvent")
 public class SvgBasicEvent extends SvgGroupObject {
 
     private Element group;
+
+    public SvgBasicEvent() {
+    }
     
     public SvgBasicEvent(int x, int y) {
         super(x, y);
@@ -45,6 +51,7 @@ public class SvgBasicEvent extends SvgGroupObject {
     }
 
     @Override
+    @XmlTransient
     public Element getElement() {
         return group;
     }

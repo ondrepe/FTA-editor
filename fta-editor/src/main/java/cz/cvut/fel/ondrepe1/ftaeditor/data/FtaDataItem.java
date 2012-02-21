@@ -7,21 +7,34 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.w3c.dom.Element;
 
 /**
  *
  * @author ondrepe
  */
+@XmlRootElement( name="ftaDataItem" )
+@XmlAccessorType( XmlAccessType.NONE )
 public class FtaDataItem implements IDataItem{
 
+    @XmlElement
     private SvgGroupObject svgObject;
+//    @XmlElement
     private FtaDataItem parent;
+    @XmlElement
     private List<FtaDataItem> children;
 
-    public FtaDataItem(SvgGroupObject svgObject) {
-        this.svgObject = svgObject;
+    public FtaDataItem() {
         children = new ArrayList<FtaDataItem>();
+    }
+    
+    public FtaDataItem(SvgGroupObject svgObject) {
+        this();
+        this.svgObject = svgObject;
     }
     
     public Element getSvgElement() {
@@ -62,6 +75,10 @@ public class FtaDataItem implements IDataItem{
         return children.size();
     }
     
+    public boolean hasChilren() {
+        return !children.isEmpty();
+    }
+    
     public boolean canAddChild() {
         boolean result = false;
         if (svgObject.getSymbol() instanceof AbstractGate) {
@@ -84,6 +101,10 @@ public class FtaDataItem implements IDataItem{
             result = true;
         }
         return result;
+    }
+
+    protected List<FtaDataItem> getChildren() {
+        return children;
     }
     
     public boolean isLeaf() {
@@ -132,5 +153,13 @@ public class FtaDataItem implements IDataItem{
     
     public void setPosition(Point position) {
         svgObject.setPosition(position);
+    }
+    
+    public Point getOutputPoint() {
+        return svgObject.getOutputPoint();
+    }
+    
+    public Point getInputPoint() {
+        return svgObject.getInputPoint();
     }
 }

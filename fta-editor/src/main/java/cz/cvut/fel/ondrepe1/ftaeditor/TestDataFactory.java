@@ -17,7 +17,7 @@ public class TestDataFactory {
         and.addChild(DataCreator.createConditionalEvent(0, 200));
         and.addChild(DataCreator.createBasicEvent(100, 200));
         
-        data.getStartItem().setChild(and);
+        data.getStartItem().addChild(and);
         
         return data;
     }

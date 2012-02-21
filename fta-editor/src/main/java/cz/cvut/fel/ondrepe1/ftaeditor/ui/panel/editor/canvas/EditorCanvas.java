@@ -2,6 +2,7 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move.IDataItemMovedListener;
@@ -9,6 +10,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorCanvasMouseListener;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,17 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
         }
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (FtaDataItem item : data.getItems()) {
+            for (int i = 0; i!= item.getChildrenCount(); i++) {
+                FtaDataItem child = item.getChildAt(i);
+                g.drawLine(item.getInputPoint().x, item.getInputPoint().y, child.getOutputPoint().x, child.getOutputPoint().y);
+            }
+        }
+    }
+
     private void setData(FtaData data) {
         this.data = data;
         updateCanvas();
@@ -93,5 +106,7 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
     
     public void onEvent(DataChangedEvent event) {
         setData(event.getData());
+        //TODO: test case save
+        FtaController.getInstance().fireEvent(new DataSaveEvent(data));
     }
 }

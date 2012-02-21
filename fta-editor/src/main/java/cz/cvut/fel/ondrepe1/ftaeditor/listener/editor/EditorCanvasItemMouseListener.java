@@ -1,9 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.listener.editor;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataConnectItemsEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataStartItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas.EditorCanvasItem;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -29,9 +33,19 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
         int editorState = FtaEditorController.getInstance().getEditorState();
         
         if (editorState == FtaEditorController.EDITOR_STATE_SELECT 
-                || editorState == FtaEditorController.EDITOR_STATE_EDIT
-                || editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
+                || editorState == FtaEditorController.EDITOR_STATE_EDIT) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        } else if (editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
+            if (!FtaDataController.getInstance().hasParent()) {
+                if (component.getDataItem().canAddChild()) {
+                    component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                } 
+            } else {
+                if (FtaDataController.getInstance().getParent() != component.getDataItem() 
+                        || component.getDataItem().getParent() instanceof FtaDataStartItem)
+                component.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                
+            }
         }
     }
 
@@ -81,6 +95,24 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Clicked: x: " + e.getX() + " y: " + e.getY() + "; component: " + component.toString());
+        int editorState = FtaEditorController.getInstance().getEditorState();
+        
+        if (editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
+            if (!FtaDataController.getInstance().hasParent()) {
+                FtaDataController.getInstance().setParent(component.getDataItem());
+                component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            } else {
+                if (FtaDataController.getInstance().getParent() != component.getDataItem() 
+                        || component.getDataItem().getParent() instanceof FtaDataStartItem) {
+                    component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    FtaController.getInstance().fireEvent(new DataConnectItemsEvent(FtaDataController.getInstance().getParent(), component.getDataItem()));
+                    FtaDataController.getInstance().resetParent();
+                }
+            }
+        } else if (editorState == FtaEditorController.EDITOR_STATE_EDIT) {
+            if (e.getClickCount() == 2) {
+                FtaController.getInstance().fireEvent(new OpenEditDialogEvent(component.getDataItem()));
+            }
+        }
     }
 }

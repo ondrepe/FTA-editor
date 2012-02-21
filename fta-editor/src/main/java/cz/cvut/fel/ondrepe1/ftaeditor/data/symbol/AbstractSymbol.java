@@ -1,9 +1,15 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data.symbol;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.BasicEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.ConditionalEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AndGate;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  *
  * @author ondrepe
  */
+@XmlSeeAlso({BasicEvent.class, ConditionalEvent.class, AndGate.class})
 public abstract class AbstractSymbol implements Cloneable {
 
     private String text;

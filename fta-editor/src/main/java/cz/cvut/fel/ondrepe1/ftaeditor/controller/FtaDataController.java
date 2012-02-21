@@ -31,6 +31,8 @@ public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListe
     }
     
     private FtaData data;
+    
+    private FtaDataItem parent;
 
     public FtaDataController() {
         registerListeners();
@@ -38,6 +40,22 @@ public class FtaDataController implements IRemoveSymbolListener, IAddSymbolListe
     
     public FtaData getData() {
         return data;
+    }
+
+    public FtaDataItem getParent() {
+        return parent;
+    }
+    
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    public void setParent(FtaDataItem parent) {
+        this.parent = parent;
+    }
+    
+    public void resetParent() {
+        parent = null;
     }
     
     public void loadData() {
