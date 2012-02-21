@@ -4,7 +4,6 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataEditItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -123,6 +122,5 @@ public class EditDataDialog extends JDialog {
         layout.putConstraint(SpringLayout.SOUTH, lblError, -10, SpringLayout.NORTH, editButton);
         
         this.getContentPane().add(mainPanel);
-//        pack();
     }
 }

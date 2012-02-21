@@ -8,7 +8,10 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgConditionalEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import java.awt.Point;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -18,15 +21,12 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType( XmlAccessType.PUBLIC_MEMBER )
 public abstract class SvgGroupObject extends SvgObject {
     
-//    @XmlElement
     private Size size;
-//    @XmlElement
     private Position pos;
     
     private Point position;
     private Point outputPoint;
     private Point inputPoint;
-//    @XmlElement
     private AbstractSymbol symbol;
 
     public SvgGroupObject() {

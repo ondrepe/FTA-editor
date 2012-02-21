@@ -112,7 +112,9 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
     public void onEvent(DataItemMovedCompleteEvent event) {
         FtaDataItem item = event.getDataItem();
         Node node = nodes.get(item);
-        svgRoot.removeChild(node);
+        if (node != null) {
+            svgRoot.removeChild(node);
+        }
         item.setPosition(event.getPosition());
         node = document.importNode(item.getSvgElement(), true);
         svgRoot.appendChild(node);

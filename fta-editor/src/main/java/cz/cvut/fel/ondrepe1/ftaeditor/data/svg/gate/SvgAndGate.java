@@ -10,7 +10,6 @@ import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AndGate;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.w3c.dom.Element;

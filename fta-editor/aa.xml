@@ -53,7 +53,7 @@
                 <children>
                     <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
                         <pos>
-                            <x>293</x>
+                            <x>248</x>
                             <y>375</y>
                         </pos>
                         <size>
@@ -65,6 +65,58 @@
                             <label>vgrtztre</label>
                             <text> dfggs dg </text>
                         </symbol>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>171</x>
+                            <y>577</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent"/>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>171</x>
+                            <y>577</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent"/>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>171</x>
+                            <y>577</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent"/>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>171</x>
+                            <y>577</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent"/>
                     </svgObject>
                 </children>
             </children>
@@ -119,6 +171,19 @@
                     </svgObject>
                 </children>
             </children>
+        </children>
+        <children>
+            <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <pos>
+                    <x>171</x>
+                    <y>577</y>
+                </pos>
+                <size>
+                    <height>105.0</height>
+                    <width>90.0</width>
+                </size>
+                <symbol xsi:type="basicEvent"/>
+            </svgObject>
         </children>
     </startItem>
 </ftaData>

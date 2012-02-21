@@ -90,7 +90,6 @@ public class EditorCanvasItem extends JComponent {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawRenderedImage(offscreenImage, AffineTransform.getTranslateInstance(0, 0));
-        g2d.draw(new Rectangle(0, 0, rectangle.getBounds().width -1, rectangle.getBounds().height -1));
     }
 
     @Override

@@ -23,7 +23,6 @@ public class FtaDataItem implements IDataItem{
 
     @XmlElement
     private SvgGroupObject svgObject;
-//    @XmlElement
     private FtaDataItem parent;
     @XmlElement
     private List<FtaDataItem> children;
