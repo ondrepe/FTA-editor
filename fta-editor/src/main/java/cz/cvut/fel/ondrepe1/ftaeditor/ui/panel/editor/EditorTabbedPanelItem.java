@@ -20,9 +20,13 @@ public class EditorTabbedPanelItem extends JScrollPane {
     
     public EditorTabbedPanelItem(String title) {
         if(title == null) {
-           this.title = "New" + STAR; 
+           this.title = "Nový" + STAR; 
         } else {
-            this.title = title;
+            if (title.endsWith(".fta") && title.length() > 4) {
+                this.title = title.substring(0, title.length() - 4);
+            } else {
+                this.title = title;
+            }
         }
         canvas = new EditorCanvas();
         this.setViewportView(canvas);

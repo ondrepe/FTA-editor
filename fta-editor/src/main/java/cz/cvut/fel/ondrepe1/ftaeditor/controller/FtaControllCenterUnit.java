@@ -36,6 +36,7 @@ public class FtaControllCenterUnit {
         ftaController.registerEventListener(DataAddLonelyItemEvent.class, this.data);
         ftaController.registerEventListener(DataConnectItemsEvent.class, this.data);
         ftaController.registerEventListener(DataEditItemEvent.class, this.data);
+        ftaController.registerEventListener(DataRemoveItemEvent.class, this.data);
         
         editorTabbedPanelItem = new EditorTabbedPanelItem(name);
     }

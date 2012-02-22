@@ -27,6 +27,7 @@ public class EditorCanvasMouseListener extends MouseAdapter {
         if (editorState != FtaEditorController.EDITOR_STATE_SELECT 
                 && editorState != FtaEditorController.EDITOR_STATE_EDIT 
                 && editorState != FtaEditorController.EDITOR_STATE_CONNECT
+                && editorState != FtaEditorController.EDITOR_STATE_DELETE
                 && editorState != FtaEditorController.EDITOR_STATE_NONE) {
             component.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         }
@@ -39,6 +40,7 @@ public class EditorCanvasMouseListener extends MouseAdapter {
         if (editorState != FtaEditorController.EDITOR_STATE_SELECT 
                 && editorState != FtaEditorController.EDITOR_STATE_EDIT
                 && editorState != FtaEditorController.EDITOR_STATE_CONNECT
+                && editorState != FtaEditorController.EDITOR_STATE_DELETE
                 && editorState != FtaEditorController.EDITOR_STATE_NONE) {
             component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }

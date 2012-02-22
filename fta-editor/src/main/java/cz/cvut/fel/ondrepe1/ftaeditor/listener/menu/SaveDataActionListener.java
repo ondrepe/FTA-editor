@@ -28,7 +28,8 @@ public class SaveDataActionListener implements ActionListener {
         
         if(option == JFileChooser.APPROVE_OPTION) {
             String selectedFilePath = dialog.getSelectedFile().getAbsolutePath();
-            FtaControllCenter.fireGlobalEvent(new DataSaveEvent(selectedFilePath));
+            String selectedFileName = dialog.getSelectedFile().getName();
+            FtaControllCenter.fireGlobalEvent(new DataSaveEvent(selectedFilePath, selectedFileName));
         }
     }
 

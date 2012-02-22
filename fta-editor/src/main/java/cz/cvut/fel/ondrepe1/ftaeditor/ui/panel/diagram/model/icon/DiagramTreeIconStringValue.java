@@ -21,7 +21,7 @@ public class DiagramTreeIconStringValue implements StringValue {
             if (clazz != null) {
                 String key;
                 if (clazz.getSuperclass().equals(AbstractGate.class)) {
-                    key = "gate/";
+                    key = "";
                     if (clazz.equals(AndGate.class)) {
                         key += "and";
                     } else if (clazz.equals(InhibitGate.class)) {
@@ -40,7 +40,7 @@ public class DiagramTreeIconStringValue implements StringValue {
                         key += "xor";
                     }
                 } else {
-                    key = "event/";
+                    key = "";
                     if (clazz.equals(BasicEvent.class)) {
                         key += "basic";
                     } else if (clazz.equals(ConditionalEvent.class)) {
@@ -51,7 +51,7 @@ public class DiagramTreeIconStringValue implements StringValue {
                         key += "undeveloped";
                     }
                 }
-                return key + ".svg";
+                return key + ".png";
             }
         }
         return StringValues.TO_STRING.getString(value);

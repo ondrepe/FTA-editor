@@ -2,10 +2,12 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorAddTabEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorCloseTabEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorNoTabsEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorTabChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataSaveCompleteListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorAddTabListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorCloseTabListener;
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author ondrejicek
  */
-public class EditorTabbedPanel extends JTabbedPane implements ChangeListener, IEditorAddTabListener, IEditorCloseTabListener {
+public class EditorTabbedPanel extends JTabbedPane implements ChangeListener, IEditorAddTabListener, IEditorCloseTabListener, IDataSaveCompleteListener {
 
     private List<EditorTabbedPanelItem> items;
 
@@ -57,6 +59,7 @@ public class EditorTabbedPanel extends JTabbedPane implements ChangeListener, IE
         addChangeListener(this);
         FtaControllCenter.registerGlobalEventListener(EditorCloseTabEvent.class, this);
         FtaControllCenter.registerGlobalEventListener(EditorAddTabEvent.class, this);
+        FtaControllCenter.registerGlobalEventListener(DataSaveCompleteEvent.class, this);
     }
     
     public void stateChanged(ChangeEvent e) {
@@ -70,5 +73,13 @@ public class EditorTabbedPanel extends JTabbedPane implements ChangeListener, IE
 
     public void onEvent(EditorAddTabEvent event) {
         addItem(event.getItem());
+    }
+
+    public void onEvent(DataSaveCompleteEvent event) {
+        String title = event.getFileName();
+        if (title.endsWith(".fta") && title.length() > 4) {
+            title = title.substring(0, title.length() - 4);
+        }
+        this.setTitleAt(getSelectedIndex(), title);
     }
 }

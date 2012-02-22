@@ -11,7 +11,6 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorTabC
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorTabbedPanelItem;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.IODataController;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;

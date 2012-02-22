@@ -25,7 +25,7 @@ public class DiagramTreeTableValidityModel extends DiagramTreeTableModel {
     @Override
     public String getColumnName(int i) {
         if (i == 4) {
-            return "Valid";
+            return "Validita";
         }
         return super.getColumnName(i);
     }

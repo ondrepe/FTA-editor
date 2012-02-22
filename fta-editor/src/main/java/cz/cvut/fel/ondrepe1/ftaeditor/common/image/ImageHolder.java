@@ -32,11 +32,88 @@ public class ImageHolder {
     
     private static BufferedImage removeImage = loadBufferedImageFromResource("remove.png");
     
-    private static Icon btnAddIcon = loadFromResource("addBtn.png");
-    private static Icon btnAddDisabledIcon = loadFromResource("addBtn-dsb.png");
-    private static Icon btnRemoveIcon = loadFromResource("removeBtn.png");
-    private static Icon btnRemoveDisabledIcon = loadFromResource("removeBtn-dsb.png");
+    private static Icon selectIcon = loadFromResource("select.png");
+    private static Icon editIcon = loadFromResource("edit.png");
+    private static Icon connectIcon = loadFromResource("connect.png");
+    private static Icon deleteIcon = loadFromResource("delete.png");
+    
+    private static Icon basicIcon = loadFromResource("basic.png");
+    private static Icon conditionalIcon = loadFromResource("conditional.png");
+    private static Icon dormantIcon = loadFromResource("dormant.png");
+    private static Icon undevelopedIcon = loadFromResource("undeveloped.png");
+    
+    private static Icon andIcon = loadFromResource("and.png");
+    private static Icon orIcon = loadFromResource("or.png");
+    private static Icon notIcon = loadFromResource("not.png");
+    private static Icon xorIcon = loadFromResource("xor.png");
+    private static Icon inhibitIcon = loadFromResource("inhibit.png");
+    private static Icon majorityVoteIcon = loadFromResource("majorityVote.png");
+    private static Icon pandIcon = loadFromResource("pand.png");
+    private static Icon transferIcon = loadFromResource("transfer.png");
 
+    public static Icon getSelectIcon() {
+        return selectIcon;
+    }
+
+    public static Icon getEditIcon() {
+        return editIcon;
+    }
+
+    public static Icon getConnectIcon() {
+        return connectIcon;
+    }
+
+    public static Icon getDeleteIcon() {
+        return deleteIcon;
+    }
+
+    public static Icon getBasicIcon() {
+        return basicIcon;
+    }
+
+    public static Icon getConditionalIcon() {
+        return conditionalIcon;
+    }
+
+    public static Icon getDormantIcon() {
+        return dormantIcon;
+    }
+
+    public static Icon getUndevelopedIcon() {
+        return undevelopedIcon;
+    }
+
+    public static Icon getAndIcon() {
+        return andIcon;
+    }
+
+    public static Icon getOrIcon() {
+        return orIcon;
+    }
+
+    public static Icon getNotIcon() {
+        return notIcon;
+    }
+
+    public static Icon getXorIcon() {
+        return xorIcon;
+    }
+
+    public static Icon getInhibitIcon() {
+        return inhibitIcon;
+    }
+
+    public static Icon getMajorityVoteIcon() {
+        return majorityVoteIcon;
+    }
+
+    public static Icon getPandIcon() {
+        return pandIcon;
+    }
+
+    public static Icon getTransferIcon() {
+        return transferIcon;
+    }
     
     public static Icon getTickIcon() {
         return tickIcon;
@@ -44,22 +121,6 @@ public class ImageHolder {
 
     public static Icon getCrossIcon() {
         return crossIcon;
-    }
-
-    public static Icon getBtnAddIcon() {
-        return btnAddIcon;
-    }
-
-    public static Icon getBtnAddDisabledIcon() {
-        return btnAddDisabledIcon;
-    }
-
-    public static Icon getBtnRemoveIcon() {
-        return btnRemoveIcon;
-    }
-
-    public static Icon getBtnRemoveDisabledIcon() {
-        return btnRemoveDisabledIcon;
     }
 
     public static BufferedImage getRemoveImage() {

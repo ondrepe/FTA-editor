@@ -7,6 +7,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataAddChild
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataAddLonelyItemListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataConnectItemsListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataEditItemListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataRemoveItemListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move.IDataItemMovedCompleteListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ import org.w3c.dom.Node;
  * @author ondrepe
  */
 @XmlRootElement( name="ftaData" )
-public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteListener, IDataAddLonelyItemListener, IDataConnectItemsListener, IDataEditItemListener {
+public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteListener, IDataAddLonelyItemListener, IDataConnectItemsListener, IDataEditItemListener, IDataRemoveItemListener {
 
     @XmlElement
     private FtaDataStartItem startItem;
@@ -130,6 +131,16 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
     }
 
     public void onEvent(DataEditItemEvent event) {
+        FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
+    }
+
+    public void onEvent(DataRemoveItemEvent event) {
+        FtaDataItem item = event.getDataItem();
+        item.getParent().removeChild(item);
+        
+        for(FtaDataItem child : item.getChildren()) {
+            startItem.addChild(child);
+        }
         FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 }

@@ -37,7 +37,7 @@ public class DiagramTreeIconValue implements IconValue {
     }
 
     private Icon loadIcon(String key) {
-        Icon icon = ImageHolder.loadFromSvgResource(key);
+        Icon icon = ImageHolder.loadFromResource(key);
         if (icon != null) {
             iconCache.put(key, icon);
         }

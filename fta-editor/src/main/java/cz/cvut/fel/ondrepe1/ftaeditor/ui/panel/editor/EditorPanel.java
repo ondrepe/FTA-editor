@@ -32,6 +32,7 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
     private EditorToolbarToggleButton btnSelect;
     private EditorToolbarToggleButton btnEdit;
     private EditorToolbarToggleButton btnConnect;
+    private EditorToolbarToggleButton btnDelete;
     private EditorToolbarToggleButton btnBasicEvent;
     private EditorToolbarToggleButton btnConditionalEvent;
     private EditorToolbarToggleButton btnDormantEvent;
@@ -61,7 +62,7 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
 
     private EditorToolbarToggleButton createButton(int editorState, String iconPath) {
         EditorToolbarToggleButton button = new EditorToolbarToggleButton(editorState);
-        button.setIcon(ImageHolder.loadFromSvgResource(iconPath, true));
+//        button.setIcon(ImageHolder.loadFromSvgResource(iconPath, true));
         button.addItemListener(new EditorToolBarButtonItemListener());
         toolbarBtnList.add(button);
 
@@ -78,35 +79,77 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
 
     private void initToolbar() {
         toolbar = new JToolBar(JToolBar.VERTICAL);
-        toolbar.setToolTipText("Pallet");
         toolbar.setFloatable(false);
         toolbar.setSize(20, 100);
 
         btnSelect = createButton(FtaEditorController.EDITOR_STATE_SELECT);
-        btnSelect.setText("s");
+        btnSelect.setIcon(ImageHolder.getSelectIcon());
+        btnSelect.setToolTipText("Výběr");
 
         btnEdit = createButton(FtaEditorController.EDITOR_STATE_EDIT);
-        btnEdit.setText("e");
+        btnEdit.setIcon(ImageHolder.getEditIcon());
+        btnEdit.setToolTipText("Editace popisů");
 
         btnConnect = createButton(FtaEditorController.EDITOR_STATE_CONNECT);
-        btnConnect.setText("c");
+        btnConnect.setIcon(ImageHolder.getConnectIcon());
+        btnConnect.setToolTipText("Vytváření vazeb mezi symboly");
+        
+        btnDelete = createButton(FtaEditorController.EDITOR_STATE_DELETE);
+        btnDelete.setIcon(ImageHolder.getDeleteIcon());
+        btnDelete.setToolTipText("Smazání symbolu");
 
-        btnBasicEvent = createButton(FtaEditorController.EDITOR_STATE_BASIC_EVENT, "event/basic.svg");
-        btnConditionalEvent = createButton(FtaEditorController.EDITOR_STATE_CONDITIONAL_EVENT, "event/conditional.svg");
-        btnDormantEvent = createButton(FtaEditorController.EDITOR_STATE_DORMANT_EVENT, "event/dormant.svg");
-        btnUndevelopedEvent = createButton(FtaEditorController.EDITOR_STATE_UNDEVELOPED_EVENT, "event/undeveloped.svg");
-        btnAndGate = createButton(FtaEditorController.EDITOR_STATE_AND_GATE, "gate/and.svg");
-        btnOrGate = createButton(FtaEditorController.EDITOR_STATE_OR_GATE, "gate/or.svg");
-        btnXorGate = createButton(FtaEditorController.EDITOR_STATE_XOR_GATE, "gate/xor.svg");
-        btnInhibitGate = createButton(FtaEditorController.EDITOR_STATE_INHIBIT_GATE, "gate/inhibit.svg");
-        btnMajorityVoteGate = createButton(FtaEditorController.EDITOR_STATE_MAJORITY_VOTE_GATE, "gate/majorityVote.svg");
-        btnNotGate = createButton(FtaEditorController.EDITOR_STATE_NOT_GATE, "gate/not.svg");
-        btnPandGate = createButton(FtaEditorController.EDITOR_STATE_PAND_GATE, "gate/pand.svg");
-        btnTransfer = createButton(FtaEditorController.EDITOR_STATE_TRANSFER_GATE, "gate/transfer.svg");
+        btnBasicEvent = createButton(FtaEditorController.EDITOR_STATE_BASIC_EVENT);
+        btnBasicEvent.setIcon(ImageHolder.getBasicIcon());
+        btnBasicEvent.setToolTipText("Základní událost");
+        
+        btnConditionalEvent = createButton(FtaEditorController.EDITOR_STATE_CONDITIONAL_EVENT);
+        btnConditionalEvent.setIcon(ImageHolder.getConditionalIcon());
+        btnConditionalEvent.setToolTipText("Podmínková událost");
+        
+        btnDormantEvent = createButton(FtaEditorController.EDITOR_STATE_DORMANT_EVENT);
+        btnDormantEvent.setIcon(ImageHolder.getDormantIcon());
+        btnDormantEvent.setToolTipText("Neaktivní událost");
+        
+        btnUndevelopedEvent = createButton(FtaEditorController.EDITOR_STATE_UNDEVELOPED_EVENT);
+        btnUndevelopedEvent.setIcon(ImageHolder.getUndevelopedIcon());
+        btnUndevelopedEvent.setToolTipText("Nerozvíjená událost");
+        
+        btnAndGate = createButton(FtaEditorController.EDITOR_STATE_AND_GATE);
+        btnAndGate.setIcon(ImageHolder.getAndIcon());
+        btnAndGate.setToolTipText("Hradlo AND");
+        
+        btnOrGate = createButton(FtaEditorController.EDITOR_STATE_OR_GATE);
+        btnOrGate.setIcon(ImageHolder.getOrIcon());
+        btnOrGate.setToolTipText("Hradlo OR");
+        
+        btnNotGate = createButton(FtaEditorController.EDITOR_STATE_NOT_GATE);
+        btnNotGate.setIcon(ImageHolder.getNotIcon());
+        btnNotGate.setToolTipText("Hradlo Not");
+        
+        btnXorGate = createButton(FtaEditorController.EDITOR_STATE_XOR_GATE);
+        btnXorGate.setIcon(ImageHolder.getXorIcon());
+        btnXorGate.setToolTipText("Hradlo EXCLUSIVE OR");
+        
+        btnMajorityVoteGate = createButton(FtaEditorController.EDITOR_STATE_MAJORITY_VOTE_GATE);
+        btnMajorityVoteGate.setIcon(ImageHolder.getMajorityVoteIcon());
+        btnMajorityVoteGate.setToolTipText("Hradlo MAJORITY VOTE");
+        
+        btnInhibitGate = createButton(FtaEditorController.EDITOR_STATE_INHIBIT_GATE);
+        btnInhibitGate.setIcon(ImageHolder.getInhibitIcon());
+        btnInhibitGate.setToolTipText("Hradlo INHIBIT");
+        
+        btnPandGate = createButton(FtaEditorController.EDITOR_STATE_PAND_GATE);
+        btnPandGate.setIcon(ImageHolder.getPandIcon());
+        btnPandGate.setToolTipText("Hradlo PRIORITY AND");
+        
+        btnTransfer = createButton(FtaEditorController.EDITOR_STATE_TRANSFER_GATE);
+        btnTransfer.setIcon(ImageHolder.getTransferIcon());
+        btnTransfer.setToolTipText("Hradlo TRANSFER");
 
         toolbar.add(btnSelect);
         toolbar.add(btnEdit);
         toolbar.add(btnConnect);
+        toolbar.add(btnDelete);
         toolbar.addSeparator();
         toolbar.add(btnBasicEvent);
         toolbar.add(btnConditionalEvent);

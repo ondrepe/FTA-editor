@@ -38,9 +38,9 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
 
     public String getColumnName(int i) {
         if (i == 0) {
-            return "Type";
+            return "Typ Symbolu";
         } else if (i == 1) {
-            return "Label";
+            return "Popis";
         } else if (i == 2) {
             return "Text";
         }

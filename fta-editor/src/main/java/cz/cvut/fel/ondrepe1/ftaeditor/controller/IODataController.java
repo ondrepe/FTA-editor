@@ -1,21 +1,25 @@
-package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
+package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.UniversalErrorEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataLoadEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataLoadListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataSaveListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataStartItem;
-import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -23,6 +27,8 @@ import javax.xml.bind.Unmarshaller;
  */
 public class IODataController implements IDataSaveListener, IDataLoadListener {
 
+    private static final Logger logger = LoggerFactory.getLogger(IODataController.class);
+    
     private JAXBContext context;
     private Marshaller marshaller;
     private Unmarshaller unmarshaller;
@@ -36,7 +42,7 @@ public class IODataController implements IDataSaveListener, IDataLoadListener {
             unmarshaller = context.createUnmarshaller();
 
         } catch (JAXBException ex) {
-            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Chyba při načítání JAXB kontextu", ex);
         }
     }
 
@@ -54,15 +60,15 @@ public class IODataController implements IDataSaveListener, IDataLoadListener {
             } 
             fw = new FileWriter(selectedFilePath);
             marshaller.marshal(FtaControllCenter.getActualData(), fw);
-        } catch (IOException ex) {
-            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JAXBException ex) {
-            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+            
+            FtaControllCenter.fireGlobalEvent(new DataSaveCompleteEvent(event.getFileName()));
+        } catch (Exception ex) {
+            FtaControllCenter.fireGlobalEvent(new UniversalErrorEvent("Data nelze uložit do vybraného souboru"));
         } finally {
             try {
                 fw.close();
             } catch (IOException ex) {
-                Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+                FtaControllCenter.fireGlobalEvent(new UniversalErrorEvent("Problém při ukládání souboru"));
             }
         }
     }
@@ -75,10 +81,8 @@ public class IODataController implements IDataSaveListener, IDataLoadListener {
             object.reloadNodes();
             FtaControllCenter.addUnit(event.getFile().getName(), object);
             FtaControllCenter.fireLocalEvent(new DataChangedEvent(object));
-        } catch (JAXBException ex) {
-            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            FtaControllCenter.fireGlobalEvent(new UniversalErrorEvent("Soubor nelze nahrát"));
         }
     }
     

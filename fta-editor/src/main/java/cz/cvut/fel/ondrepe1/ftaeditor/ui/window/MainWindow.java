@@ -2,9 +2,11 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.UniversalErrorEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorAddTabEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorNoTabsEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenEditDialogListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IUniversalErrorListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorAddTabListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorNoTabsListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
@@ -23,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author ondrepe
  */
-public class MainWindow extends JFrame implements IOpenEditDialogListener, IEditorNoTabsListener, IEditorAddTabListener {
+public class MainWindow extends JFrame implements IOpenEditDialogListener, IEditorNoTabsListener, IEditorAddTabListener, IUniversalErrorListener {
 
     public static final Logger logger = LoggerFactory.getLogger(MainWindow.class);
     
@@ -98,12 +100,12 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener, IEdit
     }
     
     private void initFileMenu() {
-        file = new JMenu("File");
-        miNew = new JMenuItem("New");
-        miOpen = new JMenuItem("Open");
-        miSave = new JMenuItem("Save");
+        file = new JMenu("Soubor");
+        miNew = new JMenuItem("Nový");
+        miOpen = new JMenuItem("Otevřít");
+        miSave = new JMenuItem("Uložit");
         miSave.setEnabled(false);
-        miExit = new JMenuItem("Exit");
+        miExit = new JMenuItem("Konec");
         file.add(miNew);
         file.add(miOpen);
         file.add(miSave);
@@ -113,17 +115,17 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener, IEdit
     }
     
     private void initViewMenu() {
-        view = new JMenu("View");
+        view = new JMenu("Zobrazení");
         showPalletWindow = new JMenuItem("Show Pallet");
-        showDiagramTreeValidity = new JCheckBoxMenuItem("Show validation in Diagram Tree");
-        view.add(showPalletWindow);
+        showDiagramTreeValidity = new JCheckBoxMenuItem("Zobrazit validační pole v tabulce");
+//        view.add(showPalletWindow);
         view.add(showDiagramTreeValidity);
         menuBar.add(view);
     }
     
     private void initHelpMenu() {
-        help = new JMenu("Help");
-        about = new JMenuItem("About");
+        help = new JMenu("Nápověda");
+        about = new JMenuItem("O programu");
         help.add(about);
         menuBar.add(help);
     }
@@ -145,6 +147,7 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener, IEdit
         FtaControllCenter.registerGlobalEventListener(OpenEditDialogEvent.class, this);
         FtaControllCenter.registerGlobalEventListener(EditorNoTabsEvent.class, this);
         FtaControllCenter.registerGlobalEventListener(EditorAddTabEvent.class, this);
+        FtaControllCenter.registerGlobalEventListener(UniversalErrorEvent.class, this);
     }
 
     public void onEvent(OpenEditDialogEvent event) {
@@ -158,5 +161,9 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener, IEdit
 
     public void onEvent(EditorAddTabEvent event) {
         miSave.setEnabled(true);
+    }
+
+    public void onEvent(UniversalErrorEvent event) {
+        JOptionPane.showMessageDialog(this, event.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
     }
 }

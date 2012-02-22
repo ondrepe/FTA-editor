@@ -19,9 +19,9 @@ public class FtaFileChooserDialog extends JFileChooser {
     }
 
     private void initDialog() {
-        String title = "Open file";
+        String title = "Otevřít soubor";
         if (!load) {
-            title = "Save file";
+            title = "Uložit soubor";
         }
         this.setDialogTitle(title);
         this.setFileFilter(new FileFilter() {
@@ -46,7 +46,7 @@ public class FtaFileChooserDialog extends JFileChooser {
 
             @Override
             public String getDescription() {
-                return "FTA editor files (*.fta)";
+                return "FTA editor soubory (*.fta)";
             }
         });
     }

@@ -21,6 +21,7 @@ public class FtaEditorController {
     public static final int EDITOR_STATE_SELECT = 1;
     public static final int EDITOR_STATE_EDIT = 2;
     public static final int EDITOR_STATE_CONNECT = 3;
+    public static final int EDITOR_STATE_DELETE = 16;
     
     public static final int EDITOR_STATE_BASIC_EVENT = 4;
     public static final int EDITOR_STATE_CONDITIONAL_EVENT = 5;

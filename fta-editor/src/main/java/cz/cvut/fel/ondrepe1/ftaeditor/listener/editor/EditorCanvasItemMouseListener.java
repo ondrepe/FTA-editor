@@ -4,6 +4,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataConnectItemsEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataRemoveItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas.EditorCanvasItem;
@@ -31,7 +32,8 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
         int editorState = FtaEditorController.getInstance().getEditorState();
         
         if (editorState == FtaEditorController.EDITOR_STATE_SELECT 
-                || editorState == FtaEditorController.EDITOR_STATE_EDIT) {
+                || editorState == FtaEditorController.EDITOR_STATE_EDIT
+                || editorState == FtaEditorController.EDITOR_STATE_DELETE) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else if (editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
             if (!FtaEditorController.getInstance().hasParent()) {
@@ -53,7 +55,8 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
         
         if (editorState == FtaEditorController.EDITOR_STATE_SELECT 
                 || editorState == FtaEditorController.EDITOR_STATE_EDIT
-                || editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
+                || editorState == FtaEditorController.EDITOR_STATE_CONNECT
+                || editorState == FtaEditorController.EDITOR_STATE_DELETE) {
             component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
@@ -106,8 +109,12 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
                 }
             }
         } else if (editorState == FtaEditorController.EDITOR_STATE_EDIT) {
-            if (e.getClickCount() == 2) {
+            if (e.getClickCount() == 1) {
                 FtaControllCenter.fireGlobalEvent(new OpenEditDialogEvent(component.getDataItem()));
+            }
+        } else if (editorState == FtaEditorController.EDITOR_STATE_DELETE) {
+            if (e.getClickCount() == 1) {
+                FtaControllCenter.fireLocalEvent(new DataRemoveItemEvent(component.getDataItem()));
             }
         }
     }
