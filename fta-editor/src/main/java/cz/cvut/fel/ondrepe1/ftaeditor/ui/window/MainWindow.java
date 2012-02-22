@@ -1,13 +1,14 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorAddTabEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor.EditorNoTabsEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenEditDialogListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorAddTabListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.editor.IEditorNoTabsListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.OpenDataActionListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.SaveDataActionListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.*;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorPanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.filechooser.FtaFileChooserDialog;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author ondrepe
  */
-public class MainWindow extends JFrame implements IOpenEditDialogListener {
+public class MainWindow extends JFrame implements IOpenEditDialogListener, IEditorNoTabsListener, IEditorAddTabListener {
 
     public static final Logger logger = LoggerFactory.getLogger(MainWindow.class);
     
@@ -101,6 +102,7 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener {
         miNew = new JMenuItem("New");
         miOpen = new JMenuItem("Open");
         miSave = new JMenuItem("Save");
+        miSave.setEnabled(false);
         miExit = new JMenuItem("Exit");
         file.add(miNew);
         file.add(miOpen);
@@ -126,21 +128,35 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener {
         menuBar.add(help);
     }
 
+    public DiagramTreePanel getDiagramTreePanel() {
+        return diagramTreePanel;
+    }
+
     private void initListeners() {
         this.addWindowListener(new WindowClosingListener());
         miExit.addActionListener(new ExitListener());
-        miNew.addActionListener(null);
+        miNew.addActionListener(new NewDataActionListener());
         miOpen.addActionListener(new OpenDataActionListener(this, new FtaFileChooserDialog(true)));
         miSave.addActionListener(new SaveDataActionListener(this, new FtaFileChooserDialog(false)));
         showDiagramTreeValidity.addActionListener(new ShowDiagramTreeTableValidityListener(diagramTreePanel));
     }
     
     private void registerListeners() {
-        FtaController.getInstance().registerEventListener(OpenEditDialogEvent.class, this);
+        FtaControllCenter.registerGlobalEventListener(OpenEditDialogEvent.class, this);
+        FtaControllCenter.registerGlobalEventListener(EditorNoTabsEvent.class, this);
+        FtaControllCenter.registerGlobalEventListener(EditorAddTabEvent.class, this);
     }
 
     public void onEvent(OpenEditDialogEvent event) {
         EditDataDialog dialog = new EditDataDialog(event.getDataItem(), this);
         dialog.setVisible(true);
+    }
+
+    public void onEvent(EditorNoTabsEvent event) {
+        miSave.setEnabled(false);
+    }
+
+    public void onEvent(EditorAddTabEvent event) {
+        miSave.setEnabled(true);
     }
 }

@@ -30,6 +30,8 @@ public class ImageHolder {
     private static Icon tickIcon = loadFromResource("tick.png");
     private static Icon crossIcon = loadFromResource("cross.png");
     
+    private static BufferedImage removeImage = loadBufferedImageFromResource("remove.png");
+    
     private static Icon btnAddIcon = loadFromResource("addBtn.png");
     private static Icon btnAddDisabledIcon = loadFromResource("addBtn-dsb.png");
     private static Icon btnRemoveIcon = loadFromResource("removeBtn.png");
@@ -59,6 +61,10 @@ public class ImageHolder {
     public static Icon getBtnRemoveDisabledIcon() {
         return btnRemoveDisabledIcon;
     }
+
+    public static BufferedImage getRemoveImage() {
+        return removeImage;
+    }
     
     public static Icon loadFromResource(String name) {
         URL url = ImageHolder.class.getResource("/img/" + name);
@@ -71,6 +77,22 @@ public class ImageHolder {
                 image = GraphicsUtilities.createThumbnail(image, 16);
             }
             return new ImageIcon(image);
+        } catch (IOException e) {
+        }
+        return null;
+    }
+    
+    private static BufferedImage loadBufferedImageFromResource(String name) {
+        URL url = ImageHolder.class.getResource("/img/" + name);
+        if (url == null) {
+            return null;
+        }
+        try {
+            BufferedImage image = ImageIO.read(url);
+//            if (image.getHeight() > 30) {
+                image = GraphicsUtilities.createThumbnail(image, 16);
+//            }
+            return image;
         } catch (IOException e) {
         }
         return null;

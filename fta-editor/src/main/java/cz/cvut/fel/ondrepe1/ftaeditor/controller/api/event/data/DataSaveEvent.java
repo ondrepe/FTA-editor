@@ -1,22 +1,21 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import java.io.File;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonGlobalEvent;
 
 /**
  *
  * @author ondrepe
  */
-public class DataSaveEvent extends CommonEvent {
+public class DataSaveEvent extends CommonGlobalEvent {
 
-    private File file;
+    private String filePath;
 
-    public DataSaveEvent(File file) {
-        this.file = file;
+    public DataSaveEvent(String filePath) {
+        this.filePath = filePath;
     }
 
-    public File getFile() {
-        return file;
+    public String getFilePath() {
+        return filePath;
     }
 
 }

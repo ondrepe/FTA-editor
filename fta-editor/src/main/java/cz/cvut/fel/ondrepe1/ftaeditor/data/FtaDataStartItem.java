@@ -32,8 +32,4 @@ public class FtaDataStartItem extends FtaDataItem {
     public Class getSymbolClass() {
         return null;
     }
-    
-    public void removeChild(FtaDataItem child){
-        getChildren().remove(child);
-    }
 }

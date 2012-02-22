@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataEditItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import java.awt.Color;
@@ -35,9 +35,11 @@ public class EditDataDialog extends JDialog {
         
         setSize(300, 150);
         setResizable(false);
+        setLocation((owner.getWidth() / 2) - 150, (owner.getHeight() / 2) - 75);
         
         mainPanel = new JPanel();
         initComponents();
+        
     }
 
     private void initComponents() {
@@ -84,7 +86,7 @@ public class EditDataDialog extends JDialog {
                     result = false;
                 }
                 if (result) {
-                    FtaController.getInstance().fireEvent(new DataEditItemEvent(dataItem));
+                    FtaControllCenter.fireLocalEvent(new DataEditItemEvent(dataItem));
                     EditDataDialog.this.dispose();
                 }
             }

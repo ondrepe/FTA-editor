@@ -1,7 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
-import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.IODataController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.MainWindow;
 
 /**
@@ -15,9 +14,8 @@ public class FtaEditor {
     }
 
     public FtaEditor() {
-        IODataController data = new IODataController();
+        FtaControllCenter fcc = FtaControllCenter.init();
         MainWindow mw = new MainWindow();
-        
-        FtaDataController.getInstance();
+        fcc.setDiagramTreePanel(mw.getDiagramTreePanel());
     }
 }

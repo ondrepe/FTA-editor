@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.listener.editor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataCreateItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas.EditorCanvas;
@@ -52,7 +52,7 @@ public class EditorCanvasMouseListener extends MouseAdapter {
                 && editorState != FtaEditorController.EDITOR_STATE_EDIT
                 && editorState != FtaEditorController.EDITOR_STATE_CONNECT
                 && editorState != FtaEditorController.EDITOR_STATE_NONE) {
-            FtaController.getInstance().fireEvent(new DataCreateItemEvent(e.getPoint(), editorState));
+            FtaControllCenter.fireLocalEvent(new DataCreateItemEvent(e.getPoint(), editorState));
         }
     }
 }

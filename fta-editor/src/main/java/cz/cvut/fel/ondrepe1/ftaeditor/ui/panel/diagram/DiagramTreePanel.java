@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
@@ -34,7 +34,6 @@ public class DiagramTreePanel extends JPanel implements IDataChangedListener {
 
     public DiagramTreePanel() {
         initComponents();
-        registerListeners();
     }
 
     public FtaData getData() {
@@ -121,8 +120,8 @@ public class DiagramTreePanel extends JPanel implements IDataChangedListener {
         table.expandAll();
     }
 
-    protected final void registerListeners() {
-        FtaController.getInstance().registerEventListener(DataChangedEvent.class, this);
+    public void registerListeners() {
+        FtaControllCenter.registerLocalEventListener(DataChangedEvent.class, this);
     }
 
     public void onEvent(DataChangedEvent event) {

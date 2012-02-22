@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ftaData>
+    <startItem>
+        <children>
+            <svgObject xsi:type="svgAndGate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <pos>
+                    <x>352</x>
+                    <y>12</y>
+                </pos>
+                <size>
+                    <height>110.0</height>
+                    <width>90.0</width>
+                </size>
+                <symbol xsi:type="andGate">
+                    <failureProbability>12.0</failureProbability>
+                    <label>dsa</label>
+                    <text>dasdsa</text>
+                </symbol>
+            </svgObject>
+            <children>
+                <svgObject xsi:type="svgAndGate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <pos>
+                        <x>155</x>
+                        <y>153</y>
+                    </pos>
+                    <size>
+                        <height>110.0</height>
+                        <width>90.0</width>
+                    </size>
+                    <symbol xsi:type="andGate">
+                        <failureProbability>3.0</failureProbability>
+                        <label>dasda</label>
+                        <text>asddas</text>
+                    </symbol>
+                </svgObject>
+                <children>
+                    <svgObject xsi:type="svgConditionalEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>46</x>
+                            <y>382</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="conditionalEvent">
+                            <failureProbability>2.0</failureProbability>
+                            <label>hjhfgj</label>
+                            <text>fdgfd</text>
+                        </symbol>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>293</x>
+                            <y>375</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent">
+                            <failureProbability>9.0</failureProbability>
+                            <label>vgrtztre</label>
+                            <text> dfggs dg </text>
+                        </symbol>
+                    </svgObject>
+                </children>
+            </children>
+            <children>
+                <svgObject xsi:type="svgAndGate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <pos>
+                        <x>536</x>
+                        <y>173</y>
+                    </pos>
+                    <size>
+                        <height>110.0</height>
+                        <width>90.0</width>
+                    </size>
+                    <symbol xsi:type="andGate">
+                        <failureProbability>4.0</failureProbability>
+                        <label>hghfg</label>
+                        <text>gfjjgfh</text>
+                    </symbol>
+                </svgObject>
+                <children>
+                    <svgObject xsi:type="svgConditionalEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>424</x>
+                            <y>376</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="conditionalEvent">
+                            <failureProbability>7.0</failureProbability>
+                            <label>fdgshdh h ztrhs</label>
+                            <text>h shgfdh h </text>
+                        </symbol>
+                    </svgObject>
+                </children>
+                <children>
+                    <svgObject xsi:type="svgBasicEvent" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                        <pos>
+                            <x>644</x>
+                            <y>385</y>
+                        </pos>
+                        <size>
+                            <height>105.0</height>
+                            <width>90.0</width>
+                        </size>
+                        <symbol xsi:type="basicEvent">
+                            <failureProbability>78.0</failureProbability>
+                            <label>ouztutrd</label>
+                            <text>weqtrzzu</text>
+                        </symbol>
+                    </svgObject>
+                </children>
+            </children>
+        </children>
+    </startItem>
+</ftaData>

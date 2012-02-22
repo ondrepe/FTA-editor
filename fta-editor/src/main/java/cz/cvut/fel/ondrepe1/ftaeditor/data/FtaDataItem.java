@@ -1,5 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
@@ -96,7 +97,7 @@ public class FtaDataItem implements IDataItem{
             children.add(child);
             child.setParent(this);
             // fire event
-            FtaController.getInstance().fireEvent(new DataAddChildEvent(child));
+            FtaControllCenter.fireLocalEvent(new DataAddChildEvent(child));
             result = true;
         }
         return result;
@@ -160,5 +161,9 @@ public class FtaDataItem implements IDataItem{
     
     public Point getInputPoint() {
         return svgObject.getInputPoint();
+    }
+    
+    public void removeChild(FtaDataItem child){
+        getChildren().remove(child);
     }
 }

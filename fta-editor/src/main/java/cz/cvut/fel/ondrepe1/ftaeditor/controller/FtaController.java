@@ -1,7 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IEventListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonLocalEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.ILocalEventListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,26 +15,17 @@ import java.util.logging.Logger;
  * @author ondrepe
  */
 public class FtaController {
-
-    private static FtaController instance;
     
-    public static FtaController getInstance() {
-        if (instance == null) {
-            instance = new FtaController();
-        }
-        return instance;
-    }
-    
-    private Map<Class, List<IEventListener>> listeners;
+    private Map<Class, List<ILocalEventListener>> listeners;
 
     public FtaController() {
-        listeners = new HashMap<Class, List<IEventListener>>();
+        listeners = new HashMap<Class, List<ILocalEventListener>>();
     }
     
-    public void fireEvent(CommonEvent event) {
-        List<IEventListener> list = listeners.get(event.getClass());
+    public void fireEvent(CommonLocalEvent event) {
+        List<ILocalEventListener> list = listeners.get(event.getClass());
         if (list != null) {
-            for (IEventListener listener : list) {
+            for (ILocalEventListener listener : list) {
                 try {
                     Method method = listener.getClass().getMethod("onEvent", event.getClass());
                     method.invoke(listener, event);
@@ -45,11 +36,11 @@ public class FtaController {
         }
     }
     
-    public void registerEventListener(Class<? extends CommonEvent> clazz, IEventListener listener) {
+    public void registerEventListener(Class<? extends CommonLocalEvent> clazz, ILocalEventListener listener) {
     
-        List<IEventListener> list = listeners.get(clazz);
+        List<ILocalEventListener> list = listeners.get(clazz);
         if (list == null) {
-            list = new ArrayList<IEventListener>();
+            list = new ArrayList<ILocalEventListener>();
         }
         list.add(listener);
         listeners.put(clazz, list);

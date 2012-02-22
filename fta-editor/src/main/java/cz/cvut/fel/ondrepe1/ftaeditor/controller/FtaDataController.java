@@ -1,8 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.TestDataFactory;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddLonelyItemEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataCreateItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataCreateItemListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.DataCreator;
@@ -15,22 +13,17 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
  */
 public class FtaDataController implements IDataCreateItemListener {
     
-    private static FtaDataController instance;
-    
-    public static FtaDataController getInstance() {
-        if (instance == null) {
-            instance = new FtaDataController();
-        }
-        return instance;
-    }
+//    private static FtaDataController instance;
+//    
+//    public static FtaDataController getInstance() {
+//        if (instance == null) {
+//            instance = new FtaDataController();
+//        }
+//        return instance;
+//    }
     
     private FtaData data;
-    
     private FtaDataItem parent;
-
-    public FtaDataController() {
-        registerListeners();
-    }
     
     public FtaData getData() {
         return data;
@@ -51,18 +44,9 @@ public class FtaDataController implements IDataCreateItemListener {
     public void resetParent() {
         parent = null;
     }
-    
-    public void loadData() {
-        data = TestDataFactory.generateFTATree();
-        FtaController.getInstance().fireEvent(new DataChangedEvent(data));
-    }
-    
-    private void registerListeners() {
-        FtaController.getInstance().registerEventListener(DataCreateItemEvent.class, this);
-    }
 
     public void onEvent(DataCreateItemEvent event) {
         FtaDataItem item = DataCreator.createItem(event.getEditorState(), event.getPosition());
-        FtaController.getInstance().fireEvent(new DataAddLonelyItemEvent(item));
+        FtaControllCenter.fireLocalEvent(new DataAddLonelyItemEvent(item));
     }
 }

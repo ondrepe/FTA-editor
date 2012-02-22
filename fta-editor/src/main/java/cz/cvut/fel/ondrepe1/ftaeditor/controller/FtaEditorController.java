@@ -1,5 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
+
 /**
  *
  * @author ondrepe
@@ -36,9 +38,26 @@ public class FtaEditorController {
     
     
     private int editorState;
+    private FtaDataItem parent;
 
-    public FtaEditorController() {
+    private FtaEditorController() {
         editorState = 0;
+    }
+    
+    public FtaDataItem getParent() {
+        return parent;
+    }
+    
+    public boolean hasParent() {
+        return parent != null;
+    }
+
+    public void setParent(FtaDataItem parent) {
+        this.parent = parent;
+    }
+    
+    public void resetParent() {
+        parent = null;
     }
 
     public int getEditorState() {

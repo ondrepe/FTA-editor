@@ -1,13 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.editor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonGlobalEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.toolbar.EditorToolbarToggleButton;
 
 /**
  *
  * @author ondrepe
  */
-public class EditorToolbarButtonChangeEvent extends CommonEvent {
+public class EditorToolbarButtonChangeEvent extends CommonGlobalEvent {
 
     private EditorToolbarToggleButton button;
     private boolean selected;

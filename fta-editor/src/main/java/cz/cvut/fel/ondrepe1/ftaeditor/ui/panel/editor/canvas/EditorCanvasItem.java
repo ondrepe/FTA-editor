@@ -1,5 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.IRegisterable;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.editor.EditorCanvasItemMouseListener;
 import java.awt.Graphics;
@@ -32,6 +34,8 @@ public class EditorCanvasItem extends JComponent {
     private BufferedImage offscreenImage;
     private Rectangle2D rectangle;
 
+    
+    
     public EditorCanvasItem(FtaDataItem dataItem, Rectangle2D rectangle) {
         this.dataItem = dataItem;
         this.rectangle = rectangle;
@@ -47,6 +51,8 @@ public class EditorCanvasItem extends JComponent {
         initOffscreenImage();
 
         this.setBounds(rectangle.getBounds());
+        
+//        FtaControllCenter.addRegistrable(this);
         registerListeners();
     }
 

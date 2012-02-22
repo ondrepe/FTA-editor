@@ -1,8 +1,8 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.IRegisterable;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.move.IDataItemMovedListener;
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author ondrejicek
  */
-public class EditorCanvas extends JComponent implements IDataChangedListener, IDataItemMovedListener {
+public class EditorCanvas extends JComponent implements IRegisterable, IDataChangedListener, IDataItemMovedListener {
 
     private static Logger logger = LoggerFactory.getLogger(EditorCanvas.class);
     
@@ -35,7 +35,7 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
 
     public EditorCanvas() {
         initCanvas();
-        registerListeners();
+        FtaControllCenter.addRegistrable(this);
     }
 
     private void initCanvas() {
@@ -80,10 +80,12 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (FtaDataItem item : data.getItems()) {
-            for (int i = 0; i!= item.getChildrenCount(); i++) {
-                FtaDataItem child = item.getChildAt(i);
-                g.drawLine(item.getInputPoint().x, item.getInputPoint().y, child.getOutputPoint().x, child.getOutputPoint().y);
+        if (data != null) {
+            for (FtaDataItem item : data.getItems()) {
+                for (int i = 0; i!= item.getChildrenCount(); i++) {
+                    FtaDataItem child = item.getChildAt(i);
+                    g.drawLine(item.getInputPoint().x, item.getInputPoint().y, child.getOutputPoint().x, child.getOutputPoint().y);
+                }
             }
         }
     }
@@ -94,10 +96,10 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
         repaint();
     }
 
-    private void registerListeners() {
+    public void registerListeners() {
         addMouseListener(new EditorCanvasMouseListener(this));
-        FtaController.getInstance().registerEventListener(DataChangedEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataItemMovedEvent.class, this);
+        FtaControllCenter.registerLocalEventListener(DataChangedEvent.class, this);
+        FtaControllCenter.registerLocalEventListener(DataItemMovedEvent.class, this);
     }
 
     public void onEvent(DataItemMovedEvent event) {

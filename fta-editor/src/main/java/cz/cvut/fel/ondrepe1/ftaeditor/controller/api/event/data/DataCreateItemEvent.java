@@ -1,13 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonLocalEvent;
 import java.awt.Point;
 
 /**
  *
  * @author ondrepe
  */
-public class DataCreateItemEvent extends CommonEvent {
+public class DataCreateItemEvent extends CommonLocalEvent {
 
     private Point position;
     private int editorState;

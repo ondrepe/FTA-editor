@@ -19,7 +19,11 @@ public class FtaFileChooserDialog extends JFileChooser {
     }
 
     private void initDialog() {
-        this.setDialogTitle("Load file");
+        String title = "Open file";
+        if (!load) {
+            title = "Save file";
+        }
+        this.setDialogTitle(title);
         this.setFileFilter(new FileFilter() {
 
             @Override

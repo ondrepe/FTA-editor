@@ -1,6 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.*;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataAddChildListener;
@@ -44,8 +44,7 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
         svgRoot = document.getDocumentElement();
         svgRoot.setAttributeNS(null, "width", "1000");
         svgRoot.setAttributeNS(null, "height", "1000");
-        
-        registerListeners();
+
     }
 
     public FtaDataStartItem getStartItem() {
@@ -54,14 +53,6 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
 
     public Document getDocument() {
         return document;
-    }
-
-    private void registerListeners() {
-        FtaController.getInstance().registerEventListener(DataAddChildEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataItemMovedCompleteEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataAddLonelyItemEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataConnectItemsEvent.class, this);
-        FtaController.getInstance().registerEventListener(DataEditItemEvent.class, this);
     }
 
     public void onEvent(DataAddChildEvent event) {
@@ -119,7 +110,7 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
         node = document.importNode(item.getSvgElement(), true);
         svgRoot.appendChild(node);
         nodes.put(item, node);
-        FtaController.getInstance().fireEvent(new DataChangedEvent(this));
+        FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 
     public void onEvent(DataAddLonelyItemEvent event) {
@@ -128,18 +119,17 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
         Node node = document.importNode(item.getSvgElement(), true);
         svgRoot.appendChild(node);
         nodes.put(item, node);
-        FtaController.getInstance().fireEvent(new DataChangedEvent(this));
+        FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 
     public void onEvent(DataConnectItemsEvent event) {
-        if(event.getChild().getParent() instanceof FtaDataStartItem) {
-            startItem.removeChild(event.getChild());
-        }
+        event.getChild().getParent().removeChild(event.getChild());
+        
         event.getParent().addChild(event.getChild());
-        FtaController.getInstance().fireEvent(new DataChangedEvent(this));
+        FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 
     public void onEvent(DataEditItemEvent event) {
-        FtaController.getInstance().fireEvent(new DataChangedEvent(this));
+        FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 }

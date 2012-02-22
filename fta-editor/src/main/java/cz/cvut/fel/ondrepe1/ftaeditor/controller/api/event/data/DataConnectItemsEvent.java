@@ -1,13 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonLocalEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 
 /**
  *
  * @author ondrepe
  */
-public class DataConnectItemsEvent extends CommonEvent {
+public class DataConnectItemsEvent extends CommonLocalEvent {
 
     private FtaDataItem parent;
     private FtaDataItem child;

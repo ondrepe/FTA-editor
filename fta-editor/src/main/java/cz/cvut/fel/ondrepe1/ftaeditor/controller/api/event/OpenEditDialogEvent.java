@@ -6,7 +6,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
  *
  * @author ondrepe
  */
-public class OpenEditDialogEvent extends CommonEvent {
+public class OpenEditDialogEvent extends CommonGlobalEvent {
 
     private FtaDataItem dataItem;
 

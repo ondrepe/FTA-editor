@@ -1,13 +1,11 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.listener.editor;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaDataController;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataConnectItemsEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedCompleteEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.move.DataItemMovedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataStartItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas.EditorCanvasItem;
 import java.awt.Cursor;
 import java.awt.Point;
@@ -36,13 +34,13 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
                 || editorState == FtaEditorController.EDITOR_STATE_EDIT) {
             component.setCursor(new Cursor(Cursor.HAND_CURSOR));
         } else if (editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
-            if (!FtaDataController.getInstance().hasParent()) {
+            if (!FtaEditorController.getInstance().hasParent()) {
                 if (component.getDataItem().canAddChild()) {
                     component.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 } 
             } else {
-                if (FtaDataController.getInstance().getParent() != component.getDataItem() 
-                        || component.getDataItem().getParent() instanceof FtaDataStartItem)
+                if (FtaEditorController.getInstance().getParent() != component.getDataItem()
+                        && FtaEditorController.getInstance().getParent() != component.getDataItem().getParent())
                 component.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 
             }
@@ -63,7 +61,6 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         int editorState = FtaEditorController.getInstance().getEditorState();
-        System.out.println("Start: x: " + component.getX() + " y: " + component.getY());
         
         if (editorState == FtaEditorController.EDITOR_STATE_SELECT) {
             initialPoint = e.getPoint();
@@ -79,7 +76,7 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
             component.setBounds(rect.x + e.getX() - initialPoint.x, rect.y + e.getY() - initialPoint.y, rect.width, rect.height);
             component.repaint();
 
-            FtaController.getInstance().fireEvent(new DataItemMovedEvent(component.getDataItem(), e, initialPoint));
+            FtaControllCenter.fireLocalEvent(new DataItemMovedEvent(component.getDataItem(), e, initialPoint));
         }
     }
 
@@ -87,9 +84,8 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         int editorState = FtaEditorController.getInstance().getEditorState();
         
-        System.out.println("Stop: x: " + component.getX() + " y: " + component.getY() + "; component: " + component.toString());
         if (editorState == FtaEditorController.EDITOR_STATE_SELECT) {
-            FtaController.getInstance().fireEvent(new DataItemMovedCompleteEvent(component.getDataItem(), new Point(component.getX(), component.getY())));
+            FtaControllCenter.fireLocalEvent(new DataItemMovedCompleteEvent(component.getDataItem(), new Point(component.getX(), component.getY())));
         }
     }
 
@@ -98,20 +94,20 @@ public class EditorCanvasItemMouseListener extends MouseAdapter {
         int editorState = FtaEditorController.getInstance().getEditorState();
         
         if (editorState == FtaEditorController.EDITOR_STATE_CONNECT) {
-            if (!FtaDataController.getInstance().hasParent()) {
-                FtaDataController.getInstance().setParent(component.getDataItem());
+            if (!FtaEditorController.getInstance().hasParent()) {
+                FtaEditorController.getInstance().setParent(component.getDataItem());
                 component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             } else {
-                if (FtaDataController.getInstance().getParent() != component.getDataItem() 
-                        || component.getDataItem().getParent() instanceof FtaDataStartItem) {
+                if (FtaEditorController.getInstance().getParent() != component.getDataItem()
+                        && FtaEditorController.getInstance().getParent() != component.getDataItem().getParent()) {
                     component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                    FtaController.getInstance().fireEvent(new DataConnectItemsEvent(FtaDataController.getInstance().getParent(), component.getDataItem()));
-                    FtaDataController.getInstance().resetParent();
+                    FtaControllCenter.fireLocalEvent(new DataConnectItemsEvent(FtaEditorController.getInstance().getParent(), component.getDataItem()));
+                    FtaEditorController.getInstance().resetParent();
                 }
             }
         } else if (editorState == FtaEditorController.EDITOR_STATE_EDIT) {
             if (e.getClickCount() == 2) {
-                FtaController.getInstance().fireEvent(new OpenEditDialogEvent(component.getDataItem()));
+                FtaControllCenter.fireGlobalEvent(new OpenEditDialogEvent(component.getDataItem()));
             }
         }
     }

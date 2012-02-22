@@ -1,12 +1,13 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.listener.menu;
 
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataLoadEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataSaveEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.MainWindow;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.filechooser.FtaFileChooserDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -23,10 +24,12 @@ public class SaveDataActionListener implements ActionListener {
     }
     
     public void actionPerformed(ActionEvent e) {
-        dialog.showOpenDialog(mainWindow);
+        int option = dialog.showSaveDialog(mainWindow);
         
-        File selectedFile = dialog.getSelectedFile();
-        FtaController.getInstance().fireEvent(new DataLoadEvent(selectedFile));
+        if(option == JFileChooser.APPROVE_OPTION) {
+            String selectedFilePath = dialog.getSelectedFile().getAbsolutePath();
+            FtaControllCenter.fireGlobalEvent(new DataSaveEvent(selectedFilePath));
+        }
     }
 
 }
