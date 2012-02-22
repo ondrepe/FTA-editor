@@ -1,7 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.CommonEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
+import java.io.File;
 
 /**
  *
@@ -9,13 +9,14 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
  */
 public class DataSaveEvent extends CommonEvent {
 
-    private FtaData data;
+    private File file;
 
-    public DataSaveEvent(FtaData data) {
-        this.data = data;
+    public DataSaveEvent(File file) {
+        this.file = file;
     }
 
-    public FtaData getData() {
-        return data;
+    public File getFile() {
+        return file;
     }
+
 }

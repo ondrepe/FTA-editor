@@ -106,7 +106,5 @@ public class EditorCanvas extends JComponent implements IDataChangedListener, ID
     
     public void onEvent(DataChangedEvent event) {
         setData(event.getData());
-        //TODO: test case save
-        FtaController.getInstance().fireEvent(new DataSaveEvent(data));
     }
 }

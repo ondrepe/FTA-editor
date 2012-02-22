@@ -3,12 +3,14 @@ package cz.cvut.fel.ondrepe1.ftaeditor.ui.window;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.OpenEditDialogEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.IOpenEditDialogListener;
-import cz.cvut.fel.ondrepe1.ftaeditor.listener.LoadDataActionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.WindowClosingListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ExitListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.OpenDataActionListener;
+import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.SaveDataActionListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.listener.menu.ShowDiagramTreeTableValidityListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.DiagramTreePanel;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.EditorPanel;
+import cz.cvut.fel.ondrepe1.ftaeditor.ui.window.filechooser.FtaFileChooserDialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -31,8 +33,10 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener {
     private JMenuBar menuBar;
     
     private JMenu file;
-    private JMenuItem load;
-    private JMenuItem exit;
+    private JMenuItem miNew;
+    private JMenuItem miOpen;
+    private JMenuItem miSave;
+    private JMenuItem miExit;
     
     private JMenu view;
     private JMenuItem showPalletWindow;
@@ -94,10 +98,15 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener {
     
     private void initFileMenu() {
         file = new JMenu("File");
-        load = new JMenuItem("Load");
-        exit = new JMenuItem("Exit");
-        file.add(load);
-        file.add(exit);
+        miNew = new JMenuItem("New");
+        miOpen = new JMenuItem("Open");
+        miSave = new JMenuItem("Save");
+        miExit = new JMenuItem("Exit");
+        file.add(miNew);
+        file.add(miOpen);
+        file.add(miSave);
+        file.add(new JSeparator(JSeparator.HORIZONTAL));
+        file.add(miExit);
         menuBar.add(file);
     }
     
@@ -119,8 +128,10 @@ public class MainWindow extends JFrame implements IOpenEditDialogListener {
 
     private void initListeners() {
         this.addWindowListener(new WindowClosingListener());
-        exit.addActionListener(new ExitListener());
-        load.addActionListener(new LoadDataActionListener());
+        miExit.addActionListener(new ExitListener());
+        miNew.addActionListener(null);
+        miOpen.addActionListener(new OpenDataActionListener(this, new FtaFileChooserDialog(true)));
+        miSave.addActionListener(new SaveDataActionListener(this, new FtaFileChooserDialog(false)));
         showDiagramTreeValidity.addActionListener(new ShowDiagramTreeTableValidityListener(diagramTreePanel));
     }
     

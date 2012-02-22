@@ -17,7 +17,6 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
@@ -27,9 +26,7 @@ import javax.swing.JToolBar;
  */
 public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeListener {
 
-    private JTabbedPane tabbedPane;
-    
-    private EditorCanvas canvas;
+    private EditorTabbedPanel tabbedPane;
     
     private JToolBar toolbar;
     private EditorToolbarToggleButton btnSelect;
@@ -140,10 +137,9 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
     private void initComponents() {
         initToolbar();
 
-        tabbedPane = new JTabbedPane();
-        JScrollPane scrollPane = new JScrollPane();
+        tabbedPane = new EditorTabbedPanel();
         
-        tabbedPane.addTab("New FTA" ,scrollPane);
+        tabbedPane.addItem(new EditorTabbedPanelItem(tabbedPane));
         
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -155,10 +151,6 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
         c.gridwidth = 8;
         c.insets = new Insets(0, 5, 5, 5);
         this.add(tabbedPane, c);
-        
-        
-        canvas = new EditorCanvas();
-        scrollPane.setViewportView(canvas);
     }
     
     private void loadData() {

@@ -22,13 +22,13 @@ import javax.xml.bind.Unmarshaller;
  *
  * @author ondrepe
  */
-public class IOData implements IDataSaveListener, IDataLoadListener {
+public class IODataController implements IDataSaveListener, IDataLoadListener {
 
     private JAXBContext context;
     private Marshaller marshaller;
     private Unmarshaller unmarshaller;
 
-    public IOData() {
+    public IODataController() {
         try {
             context = JAXBContext.newInstance(FtaData.class);
             marshaller = context.createMarshaller();
@@ -38,7 +38,7 @@ public class IOData implements IDataSaveListener, IDataLoadListener {
 
             registerListeners();
         } catch (JAXBException ex) {
-            Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -48,34 +48,33 @@ public class IOData implements IDataSaveListener, IDataLoadListener {
     }
 
     public void onEvent(DataSaveEvent event) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter("aa.xml");
-            marshaller.marshal(event.getData(), fw);
-        } catch (IOException ex) {
-            Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JAXBException ex) {
-            Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        FileWriter fw = null;
+//        try {
+//            fw = new FileWriter(event.getFile());
+//            marshaller.marshal(event.getData(), fw);
+//        } catch (IOException ex) {
+//            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (JAXBException ex) {
+//            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                fw.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 
     public void onEvent(DataLoadEvent event) {
         try {
-            FileReader fr = new FileReader("bb.xml");
+            FileReader fr = new FileReader(event.getFile());
             FtaData object = (FtaData) unmarshaller.unmarshal(fr);
             object.reloadNodes();
             FtaController.getInstance().fireEvent(new DataChangedEvent(object));
         } catch (JAXBException ex) {
-            Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(IOData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(IODataController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
