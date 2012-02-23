@@ -3,21 +3,18 @@ package cz.cvut.fel.ondrepe1.ftaeditor.data.svg;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.common.Position;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.common.Size;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgObject;
+import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
+import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgText;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgBasicEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgConditionalEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgDormantEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgUndevelopedEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgExclusiveOrGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgInhibitGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgMajorityVoteGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgNotGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgOrGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgPriorityAndGate;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgTransferGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.*;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import java.awt.Point;
 import javax.xml.bind.annotation.*;
+import org.w3c.dom.Node;
 
 /**
  *
@@ -57,7 +54,22 @@ public abstract class SvgGroupObject extends SvgObject {
         init();
     }
     
-    public abstract void init();
+    public void init() {
+        initElement();
+        initTexts();
+    }
+    
+    public abstract void initElement();
+    
+    public void initTexts() {
+        
+        String text = getSymbol().getText();
+        if (text != null) {
+            SvgText svgText = new SvgText(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT / 2, text);
+            Node tx = getDocument().importNode(svgText.getElement(), true);
+            getElement().appendChild(tx);
+        }
+    }
     
     protected abstract Size initSize();
     protected abstract AbstractSymbol initSymbol();

@@ -5,12 +5,12 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgCircle.RADIUS;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgConstants.DEFUAL_STEP_VALUE;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgConstants.SVG_TYPE_GROUP;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRoundedRectangle;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.ConditionalEvent;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +35,7 @@ public class SvgConditionalEvent extends SvgGroupObject {
     }
 
     @Override
-    public void init() {
+    public void initElement() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
         SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);

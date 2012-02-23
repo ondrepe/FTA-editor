@@ -33,7 +33,7 @@ public class SvgNotGate extends SvgGroupObject {
     }
     
     @Override
-    public void init() {
+    public void initElement() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
         SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);

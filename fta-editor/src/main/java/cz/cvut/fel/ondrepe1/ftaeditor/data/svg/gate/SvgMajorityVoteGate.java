@@ -33,7 +33,7 @@ public class SvgMajorityVoteGate extends SvgGroupObject {
     }
 
     @Override
-    public void init() {
+    public void initElement() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
         Element innerGroup = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
