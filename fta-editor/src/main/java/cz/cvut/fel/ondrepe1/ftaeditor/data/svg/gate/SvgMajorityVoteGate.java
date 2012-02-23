@@ -62,7 +62,7 @@ public class SvgMajorityVoteGate extends SvgGroupObject {
         
         String label = getSymbol().getLabel();
         if (label != null) {
-            SvgLabel text = new SvgLabel((WIDTH / 2), getSize().getHeight() - 20, label);
+            SvgLabel text = new SvgLabel((WIDTH / 2), getSize().getHeight() - 25, label);
             Node tx = getDocument().importNode(text.getElement(), true);
             innerGroup.appendChild(tx);
         }
@@ -70,6 +70,14 @@ public class SvgMajorityVoteGate extends SvgGroupObject {
         innerGroup.setAttributeNS(null, "transform", "translate(" + String.valueOf(getPosition().x) + "," + String.valueOf(getPosition().y)+")");
         
         group.appendChild(innerGroup);
+        
+        Float fp = getSymbol().getFailureProbability();
+        if (label != null) {
+            String q = "Q = " + String.valueOf(fp);
+            SvgLabel svgQ = new SvgLabel(getPosition().x + (WIDTH / 2), getPosition().y + getSize().getHeight() - 15, q);
+            Node lblQ = getDocument().importNode(svgQ.getElement(), true);
+            group.appendChild(lblQ);
+        }
     }
 
     @Override

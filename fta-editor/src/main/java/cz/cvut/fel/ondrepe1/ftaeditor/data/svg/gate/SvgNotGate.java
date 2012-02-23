@@ -60,9 +60,17 @@ public class SvgNotGate extends SvgGroupObject {
         
         String label = getSymbol().getLabel();
         if (label != null) {
-            SvgLabel text = new SvgLabel(getPosition().x + (WIDTH / 2), + getPosition().y + getSize().getHeight() - 20, label);
+            SvgLabel text = new SvgLabel(getPosition().x + (WIDTH / 2), + getPosition().y + getSize().getHeight() - 35, label);
             Node tx = getDocument().importNode(text.getElement(), true);
             group.appendChild(tx);
+        }
+        
+        Float fp = getSymbol().getFailureProbability();
+        if (label != null) {
+            String q = "Q = " + String.valueOf(fp);
+            SvgLabel svgQ = new SvgLabel(getPosition().x + (WIDTH / 2), getPosition().y + getSize().getHeight() - 5, q);
+            Node lblQ = getDocument().importNode(svgQ.getElement(), true);
+            group.appendChild(lblQ);
         }
     }
     

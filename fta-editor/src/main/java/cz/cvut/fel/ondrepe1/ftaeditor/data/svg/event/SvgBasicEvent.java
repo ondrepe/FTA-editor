@@ -56,6 +56,14 @@ public class SvgBasicEvent extends SvgGroupObject {
             Node lbl = getDocument().importNode(svgLabel.getElement(), true);
             group.appendChild(lbl);
         }
+        
+        Float fp = getSymbol().getFailureProbability();
+        if (label != null) {
+            String q = "Q = " + String.valueOf(fp);
+            SvgLabel svgQ = new SvgLabel(getPosition().x + (WIDTH / 2), getPosition().y + getSize().getHeight() + 30, q);
+            Node lblQ = getDocument().importNode(svgQ.getElement(), true);
+            group.appendChild(lblQ);
+        }
     }
 
     @Override
