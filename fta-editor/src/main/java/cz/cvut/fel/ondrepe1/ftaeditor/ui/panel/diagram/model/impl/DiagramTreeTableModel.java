@@ -1,5 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.diagram.model.impl;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataEditItemEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaData;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.FtaDataItem;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.IDataItem;
@@ -68,7 +70,7 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
     }
 
     public void setValueAt(Object o, Object o1, int i) {
-        IDataItem symbol = (IDataItem) o1;
+        FtaDataItem symbol = (FtaDataItem) o1;
         if (i == 1) {
             String value = (String) o;
             symbol.setLabel(value);
@@ -79,7 +81,7 @@ public class DiagramTreeTableModel implements IDiagramTreeTableModel {
             Float value = (Float) o;
             symbol.setFailureProbability(value);
         }
-        
+        FtaControllCenter.fireLocalEvent(new DataEditItemEvent(symbol));
     }
 
     public Object getRoot() {

@@ -131,6 +131,7 @@ public class FtaData implements IDataAddChildListener, IDataItemMovedCompleteLis
     }
 
     public void onEvent(DataEditItemEvent event) {
+        event.getDataItem().init();
         FtaControllCenter.fireLocalEvent(new DataChangedEvent(this));
     }
 

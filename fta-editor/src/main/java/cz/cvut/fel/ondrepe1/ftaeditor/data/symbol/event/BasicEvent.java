@@ -11,7 +11,7 @@ public class BasicEvent extends AbstractEvent {
 
     @Override
     public String getType() {
-        return "Basic";
+        return "Základní";
     }
 
 }

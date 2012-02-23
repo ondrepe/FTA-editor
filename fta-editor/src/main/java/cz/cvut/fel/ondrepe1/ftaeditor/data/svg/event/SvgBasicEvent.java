@@ -10,6 +10,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgText;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.event.BasicEvent;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,7 +35,7 @@ public class SvgBasicEvent extends SvgGroupObject {
     }
 
     @Override
-    protected void init() {
+    public void init() {
         group = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
         SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
@@ -48,6 +49,13 @@ public class SvgBasicEvent extends SvgGroupObject {
         SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
         group.appendChild(ln);
+        
+        String label = getSymbol().getLabel();
+        if (label != null) {
+            SvgText text = new SvgText(getPosition().x + (WIDTH / 2) - (label.length() * 2.5), getPosition().y + getSize().getHeight() + 20, label);
+            Node tx = getDocument().importNode(text.getElement(), true);
+            group.appendChild(tx);
+        }
     }
 
     @Override

@@ -14,6 +14,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -76,6 +80,12 @@ public class DiagramTreePanel extends JPanel implements IDataChangedListener {
         table.setScrollsOnExpand(true);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setPreferredScrollableViewportSize(new Dimension(780, 100));
+//        table.addHierarchyListener(new HierarchyListener() {
+//
+//            public void hierarchyChanged(HierarchyEvent e) {
+//                System.out.println("aa");
+//            }
+//        });
 
         scrollPane = new JScrollPane();
         scrollPane.setViewportView(table);

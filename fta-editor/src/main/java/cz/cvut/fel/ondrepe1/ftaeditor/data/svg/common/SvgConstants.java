@@ -33,6 +33,7 @@ public class SvgConstants {
     public static final String SVG_TYPE_LINE = "line";
     public static final String SVG_TYPE_PATH = "path";
     public static final String SVG_TYPE_GROUP = "g";
+    public static final String SVG_TYPE_TEXT = "text";
     
     public static final double DEFUAL_STEP_VALUE = 5;
 }

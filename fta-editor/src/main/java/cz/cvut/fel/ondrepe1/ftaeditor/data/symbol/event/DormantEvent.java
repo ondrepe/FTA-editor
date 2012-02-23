@@ -8,6 +8,6 @@ public class DormantEvent extends AbstractEvent {
 
     @Override
     public String getType() {
-        return "Dormant";
+        return "Neaktivní";
     }
 }

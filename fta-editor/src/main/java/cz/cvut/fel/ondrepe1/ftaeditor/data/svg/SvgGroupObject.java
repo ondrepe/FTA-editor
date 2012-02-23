@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlSeeAlso({ SvgBasicEvent.class, SvgConditionalEvent.class, SvgAndGate.class })
 @XmlAccessorType( XmlAccessType.PUBLIC_MEMBER )
-@XmlType(propOrder={"size", "pos", "symbol"})
+@XmlType(propOrder={"symbol", "size", "pos"})
 public abstract class SvgGroupObject extends SvgObject {
     
     private Size size;
@@ -48,7 +48,7 @@ public abstract class SvgGroupObject extends SvgObject {
         init();
     }
     
-    protected abstract void init();
+    public abstract void init();
     
     protected abstract Size initSize();
     protected abstract AbstractSymbol initSymbol();

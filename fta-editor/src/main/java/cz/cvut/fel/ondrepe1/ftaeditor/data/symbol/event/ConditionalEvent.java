@@ -11,6 +11,6 @@ public class ConditionalEvent extends AbstractEvent {
     
     @Override
     public String getType() {
-        return "Conditional";
+        return "Podmínková";
     }
 }

@@ -83,6 +83,7 @@ public class IODataController implements IDataSaveListener, IDataLoadListener {
             FtaControllCenter.fireLocalEvent(new DataChangedEvent(object));
         } catch (Exception ex) {
             FtaControllCenter.fireGlobalEvent(new UniversalErrorEvent("Soubor nelze nahrát"));
+            ex.printStackTrace();
         }
     }
     

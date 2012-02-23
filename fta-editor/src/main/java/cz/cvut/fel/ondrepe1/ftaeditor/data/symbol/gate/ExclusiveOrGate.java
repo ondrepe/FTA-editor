@@ -13,7 +13,7 @@ public class ExclusiveOrGate extends AbstractGate {
     
     @Override
     public String getType() {
-        return "XOR";
+        return "Exclusive OR";
     }
 
     @Override

@@ -1,7 +1,6 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data;
 
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaControllCenter;
-import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaController;
 import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataAddChildEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AbstractGate;
@@ -165,5 +164,9 @@ public class FtaDataItem implements IDataItem{
     
     public void removeChild(FtaDataItem child){
         getChildren().remove(child);
+    }
+    
+    public void init() {
+        svgObject.init();
     }
 }

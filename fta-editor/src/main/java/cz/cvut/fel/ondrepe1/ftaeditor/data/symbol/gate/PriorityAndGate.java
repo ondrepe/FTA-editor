@@ -13,7 +13,7 @@ public class PriorityAndGate extends AbstractGate {
 
     @Override
     public String getType() {
-        return "PAND";
+        return "Priority AND";
     }
     
     @Override

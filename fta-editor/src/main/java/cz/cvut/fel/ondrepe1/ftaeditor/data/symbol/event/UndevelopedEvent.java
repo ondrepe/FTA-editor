@@ -8,6 +8,6 @@ public class UndevelopedEvent extends AbstractEvent {
 
     @Override
     public String getType() {
-        return "Undeveloped";
+        return "Nerozvíjená";
     }
 }
