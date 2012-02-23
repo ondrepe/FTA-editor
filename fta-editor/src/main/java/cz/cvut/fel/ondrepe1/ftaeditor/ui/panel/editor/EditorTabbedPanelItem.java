@@ -1,5 +1,7 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor;
 
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.event.data.DataChangedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.controller.api.listener.data.IDataChangedListener;
 import cz.cvut.fel.ondrepe1.ftaeditor.ui.panel.editor.canvas.EditorCanvas;
 import javax.swing.JScrollPane;
 
@@ -7,7 +9,7 @@ import javax.swing.JScrollPane;
  *
  * @author ondrejicek
  */
-public class EditorTabbedPanelItem extends JScrollPane {
+public class EditorTabbedPanelItem extends JScrollPane implements IDataChangedListener {
 
     public static final String STAR = " *";
     
@@ -38,5 +40,20 @@ public class EditorTabbedPanelItem extends JScrollPane {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void onEvent(DataChangedEvent event) {
+        if(this.getParent() instanceof EditorTabbedPanel) {
+            EditorTabbedPanel parent = (EditorTabbedPanel) getParent();
+            try {
+                String tabTitle = parent.getTitleAt(parent.getSelectedIndex());
+                if (!tabTitle.endsWith(STAR)) {
+                    tabTitle += STAR;
+                    parent.setTitleAt(parent.getSelectedIndex(), tabTitle);
+                }
+            } catch(ArrayIndexOutOfBoundsException ex) {
+                // do nothing, because Tab is allready closed
+            }
+        }
     }
 }
