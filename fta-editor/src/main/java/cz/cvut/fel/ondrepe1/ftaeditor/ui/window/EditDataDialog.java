@@ -30,10 +30,10 @@ public class EditDataDialog extends JDialog {
     private JLabel lblError;
     
     public EditDataDialog(FtaDataItem dataItem, Window owner) {
-        super(owner, "Edit Item", ModalityType.APPLICATION_MODAL);
+        super(owner, "Editace popisů", ModalityType.APPLICATION_MODAL);
         this.dataItem = dataItem;
         
-        setSize(300, 150);
+        setSize(300, 170);
         setResizable(false);
         setLocation((owner.getWidth() / 2) - 150, (owner.getHeight() / 2) - 75);
         
@@ -46,12 +46,12 @@ public class EditDataDialog extends JDialog {
         SpringLayout layout = new SpringLayout();
         mainPanel.setLayout(layout);
         
-        lblLabel = new JLabel("Label: ");
+        lblLabel = new JLabel("Štítek: ");
         txfLabel = new JTextField();
         txfLabel.setText(dataItem.getLabel());
         txfLabel.setPreferredSize(new Dimension(220, 20));
         
-        lblText = new JLabel("Text: ");
+        lblText = new JLabel("Popis: ");
         txfText = new JTextField();
         txfText.setText(dataItem.getText());
         txfText.setPreferredSize(new Dimension(220, 20));
@@ -66,7 +66,7 @@ public class EditDataDialog extends JDialog {
         lblError = new JLabel();
         lblError.setForeground(Color.red);
         
-        editButton = new JButton("Edit");
+        editButton = new JButton("Uprav");
         editButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class EditDataDialog extends JDialog {
                         dataItem.setFailureProbability(failureProbability);
                     }
                 } catch (NumberFormatException ex) {
-                    lblError.setText("not a number error");
+                    lblError.setText("Q není číslo");
                     result = false;
                 }
                 if (result) {

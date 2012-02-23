@@ -60,15 +60,6 @@ public class EditorPanel extends JPanel implements IEditorToolbarButtonChangeLis
         this.setLayout(mainLayout);
     }
 
-    private EditorToolbarToggleButton createButton(int editorState, String iconPath) {
-        EditorToolbarToggleButton button = new EditorToolbarToggleButton(editorState);
-//        button.setIcon(ImageHolder.loadFromSvgResource(iconPath, true));
-        button.addItemListener(new EditorToolBarButtonItemListener());
-        toolbarBtnList.add(button);
-
-        return button;
-    }
-
     private EditorToolbarToggleButton createButton(int editorState) {
         EditorToolbarToggleButton button = new EditorToolbarToggleButton(editorState);
         button.addItemListener(new EditorToolBarButtonItemListener());

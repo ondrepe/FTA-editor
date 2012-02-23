@@ -4,11 +4,11 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.common.Size;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgCircle.RADIUS;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgConstants.*;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgText;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.NotGate;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,7 +60,7 @@ public class SvgNotGate extends SvgGroupObject {
         
         String label = getSymbol().getLabel();
         if (label != null) {
-            SvgText text = new SvgText(getPosition().x + (WIDTH / 2) - (label.length() * 2.5), + getPosition().y + getSize().getHeight() - 20, label);
+            SvgLabel text = new SvgLabel(getPosition().x + (WIDTH / 2), + getPosition().y + getSize().getHeight() - 20, label);
             Node tx = getDocument().importNode(text.getElement(), true);
             group.appendChild(tx);
         }

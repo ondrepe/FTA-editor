@@ -16,7 +16,7 @@ public class TransferGate extends AbstractGate {
 
     @Override
     public int getMaxCountChildren() {
-        return 1;
+        return 0;
     }
 
     @Override

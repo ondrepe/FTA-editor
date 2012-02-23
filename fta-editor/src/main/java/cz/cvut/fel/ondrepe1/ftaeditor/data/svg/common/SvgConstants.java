@@ -25,9 +25,11 @@ public class SvgConstants {
     public static final String ATT_STROKE_WIDTH = "stroke-width";
     public static final String ATT_RADIUS = "r";
     public static final String ATT_DATA = "d";
+    public static final String ATT_TEXT_ANCHOR = "text-anchor";
     
     public static final String COLOR_BLACK = "black";
     public static final String COLOR_WHITE = "white";
+    public static final String TEXT_ANCHOR_MIDDLE = "middle";
     
     public static final String SVG_TYPE_RECTANGLE = "rect";
     public static final String SVG_TYPE_CIRCLE = "circle";

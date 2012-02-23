@@ -8,7 +8,7 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgText;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AndGate;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,13 +38,11 @@ public class SvgAndGate extends SvgGroupObject {
         
         Element innerGroup = getDocument().createElementNS(SVG_NS, SVG_TYPE_GROUP);
         
-//        SvgRectangle rectangle = new SvgRectangle(getPosition().x, getPosition().y);
         SvgRectangle rectangle = new SvgRectangle(0, 0);
         Node rect = getDocument().importNode(rectangle.getElement(), true);
         innerGroup.appendChild(rect);
         
         Element andGate = getDocument().createElementNS(SVG_NS, SVG_TYPE_PATH);
-//        String data = "M " + String.valueOf(getPosition().x + (WIDTH / 2) - RADIUS) + " " + String.valueOf(getPosition().y  + HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
         String data = "M " + String.valueOf((WIDTH / 2) - RADIUS) + " " + String.valueOf(HEIGHT + DEFUAL_STEP_VALUE + 55) +" l 0 -30 a " + String.valueOf(RADIUS) + " " + String.valueOf(RADIUS) + " 0 0,1 50,0 l 0,30 Z";
         andGate.setAttributeNS(null, ATT_DATA, data);
         andGate.setAttributeNS(null, ATT_STROKE_WIDTH, String.valueOf(LINE_WIDTH));
@@ -52,22 +50,19 @@ public class SvgAndGate extends SvgGroupObject {
         andGate.setAttributeNS(null, ATT_FILL, COLOR_WHITE);
         innerGroup.appendChild(andGate);
         
-//        SvgLine line = new SvgLine(getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT, getPosition().x + (WIDTH / 2), getPosition().y + HEIGHT + DEFUAL_STEP_VALUE);
         SvgLine line = new SvgLine((WIDTH / 2), HEIGHT, (WIDTH / 2), HEIGHT + DEFUAL_STEP_VALUE);
         Node ln = getDocument().importNode(line.getElement(), true);
         innerGroup.appendChild(ln);
         
         String label = getSymbol().getLabel();
         if (label != null) {
-//            SvgText text = new SvgText(getPosition().x + (WIDTH / 2) - (label.length() * 2.5), getPosition().y + getSize().getHeight() - 20, label);
-            SvgText text = new SvgText((WIDTH / 2) - (label.length() * 2.5), getSize().getHeight() - 20, label);
+            SvgLabel text = new SvgLabel((WIDTH / 2), getSize().getHeight() - 20, label);
             Node tx = getDocument().importNode(text.getElement(), true);
             innerGroup.appendChild(tx);
         }
         
         innerGroup.setAttributeNS(null, "transform", "translate(" + String.valueOf(getPosition().x) + "," + String.valueOf(getPosition().y)+")");
         
-        group.setAttributeNS(null, "fill", "red");
         group.appendChild(innerGroup);
     }
 
