@@ -4,11 +4,11 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.common.Size;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgCircle.RADIUS;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgConstants.*;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLine;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.HEIGHT;
 import static cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgRectangle.WIDTH;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgLabel;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate.AndGate;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -66,7 +66,7 @@ public class SvgAndGate extends SvgGroupObject {
         group.appendChild(innerGroup);
         
         Float fp = getSymbol().getFailureProbability();
-        if (label != null) {
+        if (fp != null) {
             String q = "Q = " + String.valueOf(fp);
             SvgLabel svgQ = new SvgLabel(getPosition().x + (WIDTH / 2), getPosition().y + getSize().getHeight() - 15, q);
             Node lblQ = getDocument().importNode(svgQ.getElement(), true);

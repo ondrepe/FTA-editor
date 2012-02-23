@@ -66,7 +66,7 @@ public class SvgNotGate extends SvgGroupObject {
         }
         
         Float fp = getSymbol().getFailureProbability();
-        if (label != null) {
+        if (fp != null) {
             String q = "Q = " + String.valueOf(fp);
             SvgLabel svgQ = new SvgLabel(getPosition().x + (WIDTH / 2), getPosition().y + getSize().getHeight() - 5, q);
             Node lblQ = getDocument().importNode(svgQ.getElement(), true);
