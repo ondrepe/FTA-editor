@@ -5,7 +5,16 @@ import cz.cvut.fel.ondrepe1.ftaeditor.data.common.Size;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.common.SvgObject;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgBasicEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgConditionalEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgDormantEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgUndevelopedEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgExclusiveOrGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgInhibitGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgMajorityVoteGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgNotGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgOrGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgPriorityAndGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgTransferGate;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.AbstractSymbol;
 import java.awt.Point;
 import javax.xml.bind.annotation.*;
@@ -14,7 +23,7 @@ import javax.xml.bind.annotation.*;
  *
  * @author ondrepe
  */
-@XmlSeeAlso({ SvgBasicEvent.class, SvgConditionalEvent.class, SvgAndGate.class })
+@XmlSeeAlso({ SvgBasicEvent.class, SvgConditionalEvent.class, SvgDormantEvent.class, SvgUndevelopedEvent.class, SvgAndGate.class, SvgPriorityAndGate.class, SvgInhibitGate.class, SvgOrGate.class, SvgMajorityVoteGate.class, SvgExclusiveOrGate.class, SvgNotGate.class, SvgTransferGate.class})
 @XmlAccessorType( XmlAccessType.PUBLIC_MEMBER )
 @XmlType(propOrder={"symbol", "size", "pos"})
 public abstract class SvgGroupObject extends SvgObject {

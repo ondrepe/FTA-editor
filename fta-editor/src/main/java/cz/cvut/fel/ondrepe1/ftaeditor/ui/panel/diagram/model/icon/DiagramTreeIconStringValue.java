@@ -34,8 +34,8 @@ public class DiagramTreeIconStringValue implements StringValue {
                         key += "or";
                     } else if (clazz.equals(PriorityAndGate.class)) {
                         key += "pand";
-//                } else if (clazz.equals(TransferGate.class)) {
-//                    key += "transfer";
+                    } else if (clazz.equals(TransferGate.class)) {
+                        key += "transfer";
                     } else if (clazz.equals(ExclusiveOrGate.class)) {
                         key += "xor";
                     }

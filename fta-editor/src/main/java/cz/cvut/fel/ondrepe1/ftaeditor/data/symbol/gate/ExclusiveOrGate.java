@@ -1,9 +1,12 @@
 package cz.cvut.fel.ondrepe1.ftaeditor.data.symbol.gate;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author ondrepe
  */
+@XmlRootElement(name="exclusiveOrEvent")
 public class ExclusiveOrGate extends AbstractGate {
 
     @Override

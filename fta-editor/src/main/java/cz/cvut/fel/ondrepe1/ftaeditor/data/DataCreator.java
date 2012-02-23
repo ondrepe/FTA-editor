@@ -4,7 +4,9 @@ import cz.cvut.fel.ondrepe1.ftaeditor.controller.FtaEditorController;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.SvgGroupObject;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgBasicEvent;
 import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgConditionalEvent;
-import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.SvgAndGate;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgDormantEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.event.SvgUndevelopedEvent;
+import cz.cvut.fel.ondrepe1.ftaeditor.data.svg.gate.*;
 import java.awt.Point;
 
 /**
@@ -34,6 +36,24 @@ public class DataCreator {
             svgObject = new SvgBasicEvent(position.x, position.y);
         } else if (state == FtaEditorController.EDITOR_STATE_CONDITIONAL_EVENT) {
             svgObject = new SvgConditionalEvent(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_DORMANT_EVENT) {
+            svgObject = new SvgDormantEvent(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_UNDEVELOPED_EVENT) {
+            svgObject = new SvgUndevelopedEvent(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_PAND_GATE) {
+            svgObject = new SvgPriorityAndGate(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_INHIBIT_GATE) {
+            svgObject = new SvgInhibitGate(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_OR_GATE) {
+            svgObject = new SvgOrGate(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_MAJORITY_VOTE_GATE) {
+            svgObject = new SvgMajorityVoteGate(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_XOR_GATE) {
+            svgObject = new SvgExclusiveOrGate(position.x, position.y);
+        } else if (state == FtaEditorController.EDITOR_STATE_NOT_GATE) {
+            svgObject = new SvgNotGate(position.x, position.y);
+        }  else if (state == FtaEditorController.EDITOR_STATE_TRANSFER_GATE) {
+            svgObject = new SvgTransferGate(position.x, position.y);
         }
         FtaDataItem item = null;
         if (svgObject != null) {

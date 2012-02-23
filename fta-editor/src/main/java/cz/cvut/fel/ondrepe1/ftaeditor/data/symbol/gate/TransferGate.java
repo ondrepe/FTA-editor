@@ -6,21 +6,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author ondrepe
  */
-@XmlRootElement(name="inhibitGate")
-public class InhibitGate extends AbstractGate {
+@XmlRootElement(name="transferGate")
+public class TransferGate extends AbstractGate {
 
     @Override
     public int getMinCountChildren() {
-        return 2;
-    }
-    
-    @Override
-    public String getType() {
-        return "Inhibit";
+        return 0;
     }
 
     @Override
     public int getMaxCountChildren() {
-        return 2;
+        return 1;
     }
+
+    @Override
+    public String getType() {
+        return "Transfer";
+    }
+
 }

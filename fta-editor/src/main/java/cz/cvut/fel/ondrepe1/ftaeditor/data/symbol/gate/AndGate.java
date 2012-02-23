@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author ondrepe
  */
-@XmlRootElement(name="andEvent")
+@XmlRootElement(name="andGate")
 public class AndGate extends AbstractGate {
 
     @Override

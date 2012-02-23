@@ -16,6 +16,7 @@ public class SvgConstants {
     public static final String ATT_Y_1 = "y1";
     public static final String ATT_X_2 = "x2";
     public static final String ATT_Y_2 = "y2";
+    public static final String ATT_POINTS = "points";
     
     public static final String ATT_WIDTH = "width";
     public static final String ATT_HEIGHT = "height";
@@ -34,6 +35,7 @@ public class SvgConstants {
     public static final String SVG_TYPE_PATH = "path";
     public static final String SVG_TYPE_GROUP = "g";
     public static final String SVG_TYPE_TEXT = "text";
+    public static final String SVG_TYPE_POLYGON = "polygon";
     
     public static final double DEFUAL_STEP_VALUE = 5;
 }
